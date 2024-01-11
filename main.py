@@ -13,3 +13,6 @@ if __name__ == '__main__':
 
     print("Hello, Team!")
     print("Test")
+
+    for num in range(10):
+        print(num)
