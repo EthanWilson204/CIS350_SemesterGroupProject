@@ -13,4 +13,4 @@ if __name__ == '__main__':
 
     print("Hello, Team!!")
     print("Test")
-    print("Test2sd)
+    print("Test2")
