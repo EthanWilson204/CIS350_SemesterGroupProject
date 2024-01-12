@@ -1,6 +1,6 @@
 """
 Project Name: CIS350 Semester Group Project
-Authors: Ethan Wilson, Gabe Kucinich, //FIXME [INSERT FINAL AUTHOR HERE]
+Authors: Ethan Wilson, Gabe Kucinich, Gideon Moerdyk
 
 Class: CIS 350 02
 Professor: J. Nandigam
@@ -11,6 +11,9 @@ Description: //FIXME [INSERT DESCRIPTION HERE]
 """
 if __name__ == '__main__':
 
+    print("Hello, Team!!")
+    print("Test")
+    print("Test2")
     print("Hello, Team!")
     print("Test")
 
