@@ -18,6 +18,7 @@ if __name__ == '__main__':
     print("Test")
     print("Gideon's Test")
     print("Gabe's Test")
+    print("Ethan's Test")
 
     for num in range(10):
         print(num)
