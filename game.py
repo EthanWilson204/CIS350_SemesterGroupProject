@@ -34,15 +34,27 @@ while True:
 
     WORK = 10000
 
+    bar_width = 300
+    bar_height = 100
+    
+    x_coord_Q1Q4 = 70
+    x_coord_Q2Q3 = 710
+    
+    y_coord_Q1Q2 = 130
+    y_coord_Q3Q4 = 490
+
     #loading bar background
     #coords for the top left corners of the backgrounds for each loading bar (BGQ# specifies quadrant)
-    LOADING_BGQ1 = pygame.draw.rect(screen, ("RED"), (220,130,200,100))
-    LOADING_BGQ2 = pygame.draw.rect(screen, ("RED"), (860,130,200,100))
-    LOADING_BGQ3 = pygame.draw.rect(screen, ("RED"), (860,490,200,100))
-    LOADING_BGQ4 = pygame.draw.rect(screen, ("RED"), (220,490,200,100))
+    LOADING_BGQ1 = pygame.draw.rect(screen, ("RED"), (x_coord_Q1Q4, y_coord_Q1Q2, bar_width, bar_height))
+    LOADING_BGQ2 = pygame.draw.rect(screen, ("RED"), (x_coord_Q2Q3, y_coord_Q1Q2, bar_width, bar_height))
+    LOADING_BGQ3 = pygame.draw.rect(screen, ("RED"), (x_coord_Q1Q4, y_coord_Q3Q4, bar_width,bar_height))
+    LOADING_BGQ4 = pygame.draw.rect(screen, ("RED"), (x_coord_Q2Q3, y_coord_Q3Q4, bar_width,bar_height))
     
-    
-    
+    #upgrade button background
+    LOADING_BGQ1 = pygame.draw.rect(screen, ("BLUE"), (x_coord_Q1Q4 + bar_width + 30, y_coord_Q1Q2, 100, bar_height))
+    LOADING_BGQ2 = pygame.draw.rect(screen, ("BLUE"), (x_coord_Q2Q3 + bar_width + 30, y_coord_Q1Q2, 100, bar_height))
+    LOADING_BGQ3 = pygame.draw.rect(screen, ("BLUE"), (x_coord_Q1Q4 + bar_width + 30, y_coord_Q3Q4, 100, bar_height))
+    LOADING_BGQ4 = pygame.draw.rect(screen, ("BLUE"), (x_coord_Q2Q3 + bar_width + 30, y_coord_Q3Q4, 100, bar_height))
 
     pygame.display.update()
 
