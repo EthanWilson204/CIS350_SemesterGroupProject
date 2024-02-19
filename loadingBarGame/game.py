@@ -1,12 +1,18 @@
 '''
-Python Project CIS350
+Project: Money Loader
+Class: CIS 350-02
+Professor: J. Nandigham
+Authors: Ethan Wilson, Gideon Moerdyk, Gabe Kucinich
 
+Description:
+A game where you load bars to earn money towards a total. Everytime a bar loads, money is added to the total.
+You can spend money to upgrade the speed of each bar to earn money faster. Once the total is reached, the game
+is complete and a time will be displayed showing how fast it was completed. Figure out how to beat the game as
+fast as possible.
 '''
 #imports
-import GameScreen
+import Screen
 import pygame
-from sys import exit
-
 
 #initialize pygame
 pygame.init()
@@ -43,7 +49,7 @@ L3_speed = 4
 bar_length = 50
 bar_height = 50
 
-GameScreen.SetBackground(screen, load_limit, screen_width, screen_height,L1_xpos,L2_xpos,L3_xpos,L1_ypos,L2_ypos,L3_ypos)
+Screen.SetBackground(screen, load_limit, screen_width, screen_height,L1_xpos,L2_xpos,L3_xpos,L1_ypos,L2_ypos,L3_ypos)
 
 #loading bar 1
 L1_Bar = pygame.Surface((bar_length,bar_height))
