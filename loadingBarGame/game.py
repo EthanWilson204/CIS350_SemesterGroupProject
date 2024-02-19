@@ -2,95 +2,61 @@
 Python Project CIS350
 
 '''
-
+#imports
+import GameScreen
 import pygame
 from sys import exit
+
+
 #initialize pygame
 pygame.init()
 
 #fps control
 CLOCK = pygame.time.Clock()
 
-#display
+#main display
 screen_width = 1600
 screen_height = 900
-
 screen = pygame.display.set_mode((screen_width,screen_height))
 screen.fill('Tan')
-pygame.display.set_caption("Loading Bar")
+pygame.display.set_caption("Main Game")
 
-#surface (screen overlay) displays
 
-#start position for all bars
+#define start and end for bars
 start_x = 320
 load_limit = 1000
-bar_length = 50
-bar_height = 50
 
-#loading bar 1
+#define bar positions
 L1_xpos = start_x
 L1_ypos = 325
-L1_Bar = pygame.Surface((bar_length,bar_height))
-L1_Bar.fill('black')
-L1_speed = 2
-
-
-#loading bar 2
 L2_xpos = start_x
 L2_ypos = 425
-L2_Bar = L1_Bar.copy()
-L2_Bar.fill('blue')
-L2_speed = 3
-
-
-#loading bar 3
 L3_xpos = start_x
 L3_ypos = 525
-L3_Bar = L1_Bar.copy()
-L3_Bar.fill('green')
+
+#define bar speeds
+L1_speed = 2
+L2_speed = 3
 L3_speed = 4
 
 
-#bar background
-pygame.draw.rect(screen, 'red', (L1_xpos-15, L1_ypos-15, 780, bar_height+30))
-pygame.draw.rect(screen, 'red', (L2_xpos-15, L2_ypos-15, 780, bar_height+30))
-pygame.draw.rect(screen, 'red', (L3_xpos-15, L3_ypos-15, 780, bar_height+30))
-pygame.draw.rect(screen, 'tan', (L1_xpos, L1_ypos, 740, bar_height))
-pygame.draw.rect(screen, 'tan', (L2_xpos, L2_ypos, 740, bar_height))
-pygame.draw.rect(screen, 'tan', (L3_xpos, L3_ypos, 740, bar_height))
+bar_length = 50
+bar_height = 50
 
+GameScreen.SetBackground(screen, load_limit, screen_width, screen_height,L1_xpos,L2_xpos,L3_xpos,L1_ypos,L2_ypos,L3_ypos)
 
-#button background
-upgrade1_button_background = pygame.Surface((bar_length + 100, bar_height+30))
-upgrade2_button_background = pygame.Surface((bar_length + 100, bar_height+30))
-upgrade3_button_background = pygame.Surface((bar_length + 100, bar_height+30))
-B1_rect = upgrade1_button_background.get_rect(topleft = (load_limit + 100, L1_ypos - 15))
-B2_rect = upgrade2_button_background.get_rect(topleft = (load_limit + 100, L2_ypos - 15))
-B3_rect = upgrade3_button_background.get_rect(topleft = (load_limit + 100, L3_ypos - 15))
+#loading bar 1
+L1_Bar = pygame.Surface((bar_length,bar_height))
+L1_Bar.fill('black')
 
+#loading bar 2
+L2_Bar = L1_Bar.copy()
+L2_Bar.fill('blue')
 
-#upper bar display
-Profile_Bar = pygame.Surface((screen_width, 200))
-Profile_Bar.fill((160, 160, 160))
+#loading bar 3
+L3_Bar = L1_Bar.copy()
+L3_Bar.fill('green')
 
-
-#left side status bar display
-Left_Side_Bar = pygame.Surface((250, screen_height - 200))
-Left_Side_Bar.fill((101, 132, 129))
-
-
-#profile corner display
-Profile_Corner = pygame.Surface((250,200))
-Profile_Corner.fill((176, 98, 108))
-
-
-#static screen behavior    
-screen.blit(upgrade1_button_background, B1_rect)
-screen.blit(upgrade2_button_background, B2_rect)
-screen.blit(upgrade3_button_background, B3_rect)
-screen.blit(Profile_Bar, (0,0))
-screen.blit(Profile_Corner, (0,0))
-screen.blit(Left_Side_Bar, (0,200))
 
 #Run the events in game
 while True:
@@ -98,7 +64,7 @@ while True:
     #check if player quit
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-          pygame.quit()
+            pygame.quit()
     
     #loading bar 1
     L1_xpos += L1_speed
