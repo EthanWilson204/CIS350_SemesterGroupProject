@@ -113,9 +113,6 @@ if __name__ == "__main__":
             pygame.draw.rect(screen, 'tan', (L3_xpos, L3_ypos, 750, bar_height))
         screen.blit(L3_Bar,(L3_xpos,L3_ypos))
         
-        
-        
-        
         pygame.display.update()
         CLOCK.tick(60)     
 
