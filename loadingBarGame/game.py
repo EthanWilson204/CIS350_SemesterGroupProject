@@ -62,8 +62,8 @@ if __name__ == "__main__":
     L3_Bar.fill('green')
 
     #Define money variables
-    money_goal = 1000000000
-    money = 0
+    money_goal = 1000000000 #$1,000,000,000
+    user_money = 0
     L1_Amt = 100
     L2_Amt = 200
     L3_Amt = 300
@@ -76,30 +76,40 @@ if __name__ == "__main__":
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
-        
-        #loading bar behavior
+            if user_money >= money_goal:
+                pygame.quit()
+
         #loading bar 1
+        #animate bar moving
         L1_xpos += L1_speed
         if L1_xpos > load_limit:
             L1_xpos = start_x
+            user_money += L1_Amt
+            
+    
             pygame.draw.rect(screen, 'tan', (L1_xpos, L1_ypos, 750, bar_height))
-        
         screen.blit(L1_Bar,(L1_xpos,L1_ypos))
         
         #loading bar 2
+        #animate bar moving
         L2_xpos += L2_speed
         if L2_xpos > load_limit:
             L2_xpos = start_x
+            user_money += L2_Amt
+            
+            
             pygame.draw.rect(screen, 'tan', (L2_xpos, L2_ypos, 750, bar_height))
-        
         screen.blit(L2_Bar,(L2_xpos,L2_ypos))
-        
+
         #loading bar 3
+        #animate bar moving
         L3_xpos += L3_speed
         if L3_xpos > load_limit:
             L3_xpos = start_x
+            user_money += L3_Amt
+            
+
             pygame.draw.rect(screen, 'tan', (L3_xpos, L3_ypos, 750, bar_height))
-        
         screen.blit(L3_Bar,(L3_xpos,L3_ypos))
         
         
