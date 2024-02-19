@@ -16,17 +16,6 @@ def SetBackground(screen, load_limit, screen_width, screen_height, L1_xpos, L2_x
     pygame.draw.rect(screen, 'tan', (L2_xpos, L2_ypos, 740, bar_height))
     pygame.draw.rect(screen, 'tan', (L3_xpos, L3_ypos, 740, bar_height))
 
-
-    #button background
-    '''
-    upgrade1_button_background = pygame.Surface((bar_length + 100, bar_height+30))
-    upgrade2_button_background = pygame.Surface((bar_length + 100, bar_height+30))
-    upgrade3_button_background = pygame.Surface((bar_length + 100, bar_height+30))
-    B1_rect = upgrade1_button_background.get_rect(topleft = (load_limit + 100, L1_ypos - 15))
-    B2_rect = upgrade2_button_background.get_rect(topleft = (load_limit + 100, L2_ypos - 15))
-    B3_rect = upgrade3_button_background.get_rect(topleft = (load_limit + 100, L3_ypos - 15))
-    '''
-    
     #button backbgrounds
     pygame.draw.rect(screen, "black", (load_limit + 100, L1_ypos - 15,bar_length + 100, bar_height+30))
     pygame.draw.rect(screen, "black", (load_limit + 100, L2_ypos - 15,bar_length + 100, bar_height+30))
