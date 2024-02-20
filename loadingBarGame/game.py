@@ -11,8 +11,9 @@ is complete and a time will be displayed showing how fast it was completed. Figu
 fast as possible.
 '''
 #imports
-import Screen
 import pygame
+from Screen import *
+from GameFunctions import *
 
 #initialize pygame
 pygame.init()
@@ -43,11 +44,11 @@ if __name__ == "__main__":
 
 
     #define bar speeds
-    L1_speed = 2
-    L2_speed = 3
-    L3_speed = 4
+    L1_speed = 1.0
+    L2_speed = 2.0
+    L3_speed = 3.0
 
-    Screen.SetBackground(screen, load_limit, screen_width, screen_height,L1_xpos,L2_xpos,L3_xpos,L1_ypos,L2_ypos,L3_ypos)
+    SetBackground(screen, load_limit, screen_width, screen_height,L1_xpos,L2_xpos,L3_xpos,L1_ypos,L2_ypos,L3_ypos)
 
     #loading bar 1
     L1_Bar = pygame.Surface((bar_length,bar_height))
@@ -81,36 +82,36 @@ if __name__ == "__main__":
 
         #loading bar 1
         #animate bar moving
-        L1_xpos += L1_speed
-        if user_money == money_goal:
-                L1_xpos = start_x
-                
+        L1_xpos += L1_speed            
         if L1_xpos > load_limit:
-            L1_xpos = start_x
-            user_money += L1_Amt
             
-            pygame.draw.rect(screen, 'tan', (L1_xpos, L1_ypos, 750, bar_height))
+            addMoney(user_money, L1_Amt)
+            L1_xpos = start_x
+            
+            pygame.draw.rect(screen, 'tan', (L1_xpos, L1_ypos, 740, bar_height))
         screen.blit(L1_Bar,(L1_xpos,L1_ypos))
         
         #loading bar 2
         #animate bar moving
         L2_xpos += L2_speed
         if L2_xpos > load_limit:
-            L2_xpos = start_x
-            user_money += L2_Amt
             
-            pygame.draw.rect(screen, 'tan', (L2_xpos, L2_ypos, 750, bar_height))
+            addMoney(user_money, L2_Amt)
+            L2_xpos = start_x
+            
+            pygame.draw.rect(screen, 'tan', (L2_xpos, L2_ypos, 740, bar_height))
         screen.blit(L2_Bar,(L2_xpos,L2_ypos))
 
         #loading bar 3
         #animate bar moving
         L3_xpos += L3_speed
         if L3_xpos > load_limit:
+            
+            addMoney(user_money, L3_Amt)
             L3_xpos = start_x
-            user_money += L3_Amt
             
 
-            pygame.draw.rect(screen, 'tan', (L3_xpos, L3_ypos, 750, bar_height))
+            pygame.draw.rect(screen, 'tan', (L3_xpos, L3_ypos, 740, bar_height))
         screen.blit(L3_Bar,(L3_xpos,L3_ypos))
         
         pygame.display.update()
