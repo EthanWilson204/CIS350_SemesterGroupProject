@@ -54,6 +54,11 @@ if __name__ == "__main__":
     B2_surf = pygame.Surface((142, 50))
     B3_surf = pygame.Surface((142, 50))
     
+    #get rectangles to make button functional
+    B1_rect = B1_surf.get_rect()
+    B2_rect = B2_surf.get_rect()
+    B3_rect = B3_surf.get_rect()
+    
     B1_surf.fill('black')
     B2_surf.fill('black')
     B3_surf.fill('black')
@@ -90,13 +95,13 @@ if __name__ == "__main__":
             if user_money >= money_goal:
                 gamerun = False
 
-        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and pygame.B1_surf.collidepoint(event.pos):
-            buttonUpgrades(L1_speed)
-        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and pygame.B1_surf.collidepoint(event.pos):
-            buttonUpgrades(L2_speed)
-        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and pygame.B1_surf.collidepoint(event.pos):
-            buttonUpgrades(L3_speed)
-        
+    
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+            
+            mouse = pygame.mouse.get_pos()
+            checkUpgrades(B1_rect, B2_rect, B3_rect, L1_speed, L2_speed, L3_speed, mouse)
+            print(mouse)
+            
         #loading bar 1
         #animate bar moving
         L1_xpos += L1_speed            
