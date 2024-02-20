@@ -48,8 +48,18 @@ if __name__ == "__main__":
     L2_speed = 2.0
     L3_speed = 3.0
 
-    SetBackground(screen, load_limit, screen_width, screen_height,L1_xpos,L2_xpos,L3_xpos,L1_ypos,L2_ypos,L3_ypos)
-
+    #Draw buttons
+    #bar height and length are 50
+    B1_surf = pygame.Surface((142, 50))
+    B2_surf = pygame.Surface((142, 50))
+    B3_surf = pygame.Surface((142, 50))
+    
+    B1_surf.fill('black')
+    B2_surf.fill('black')
+    B3_surf.fill('black')
+    
+    SetBackground(screen, screen_width, screen_height, B1_surf, B2_surf, B3_surf, L1_xpos, L2_xpos, L3_xpos, L1_ypos, L2_ypos, L3_ypos)
+    
     #loading bar 1
     L1_Bar = pygame.Surface((bar_length,bar_height))
     L1_Bar.fill('black')
@@ -80,6 +90,13 @@ if __name__ == "__main__":
             if user_money >= money_goal:
                 gamerun = False
 
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and pygame.B1_surf.collidepoint(event.pos):
+            buttonUpgrades(L1_speed)
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and pygame.B1_surf.collidepoint(event.pos):
+            buttonUpgrades(L2_speed)
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and pygame.B1_surf.collidepoint(event.pos):
+            buttonUpgrades(L3_speed)
+        
         #loading bar 1
         #animate bar moving
         L1_xpos += L1_speed            
