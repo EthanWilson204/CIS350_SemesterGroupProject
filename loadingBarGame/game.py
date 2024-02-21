@@ -44,9 +44,9 @@ if __name__ == "__main__":
 
 
     #define bar speeds
-    L1_speed = 1.0
+    L1_speed = 3.0
     L2_speed = 2.0
-    L3_speed = 3.0
+    L3_speed = 1.0
 
     #Draw buttons
     #bar height and length are 50
