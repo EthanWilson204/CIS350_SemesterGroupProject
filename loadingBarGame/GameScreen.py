@@ -12,9 +12,9 @@ def SetBackground(screen, load_limit, screen_width, screen_height, L1_xpos, L2_x
     pygame.draw.rect(screen, 'black', (L1_xpos-15, L1_ypos-15, 780, bar_height+30))
     pygame.draw.rect(screen, 'black', (L2_xpos-15, L2_ypos-15, 780, bar_height+30))
     pygame.draw.rect(screen, 'black', (L3_xpos-15, L3_ypos-15, 780, bar_height+30))
-    pygame.draw.rect(screen, 'tan', (L1_xpos, L1_ypos, 740, bar_height))
-    pygame.draw.rect(screen, 'tan', (L2_xpos, L2_ypos, 740, bar_height))
-    pygame.draw.rect(screen, 'tan', (L3_xpos, L3_ypos, 740, bar_height))
+    pygame.draw.rect(screen, 'white', (L1_xpos, L1_ypos, 740, bar_height))
+    pygame.draw.rect(screen, 'white', (L2_xpos, L2_ypos, 740, bar_height))
+    pygame.draw.rect(screen, 'white', (L3_xpos, L3_ypos, 740, bar_height))
 
     
     #upper bar display

@@ -64,28 +64,41 @@ if __name__ == "__main__":
     B3_rect = B3_surf.get_rect()
     
     SetBackground(screen, screen_width, screen_height, B1_surf, B2_surf, B3_surf, L1_xpos, L2_xpos, L3_xpos, L1_ypos, L2_ypos, L3_ypos)
-    
-    #loading bar 1
+
+#-------------------------------------------------------------------------------------------------------------------------------
+# Loading Bars
+    # Bar 1
     L1_Bar = pygame.Surface((bar_length,bar_height))
     L1_Bar.fill('red')
 
-    #loading bar 2
+    # Bar 2
     L2_Bar = L1_Bar.copy()
     L2_Bar.fill('green')
 
-    #loading bar 3
+    # Bar 3
     L3_Bar = L1_Bar.copy()
     L3_Bar.fill('blue')
-
-    #Define money variables
-    money_goal = 1000 #$1,000,000,000
+#-------------------------------------------------------------------------------------------------------------------------------
+# Money System
+    # Define money variables
+    money_goal = 1000000000 #$1,000,000,000
     user_money = 0
     L1_Amt = 100
     L2_Amt = 200
     L3_Amt = 300
 
+    moneyDisplay = pygame.font.SysFont('Ariel',100)
+    moneyDisplayX = 300
+    moneyDisplayY = 70
+
+    def displayMoney (money):
+         money = moneyDisplay.render("$" + str(money), True, (255,255,255))
+         screen.blit(money, (300,70))
+
+#-------------------------------------------------------------------------------------------------------------------------------
+# Buttons
     # Quit button
-    font0 = pygame.font.SysFont('Ariel',70,bold=False)
+    font0 = pygame.font.SysFont('Ariel',70)
     surf0 = font0.render('Quit', True, 'black')
     exitButton = pygame.Rect(1180,10,110,60)
 
@@ -114,18 +127,19 @@ if __name__ == "__main__":
     while gamerun:
         
         for event in pygame.event.get():
-            #check if player quit
+            
+            # Display Money
+            blitScoreboard(screen, screen_width, screen_height)
+            displayMoney(user_money)
+            
+
+            # Check if player quit
             if event.type == pygame.QUIT:
                 pygame.quit()
 
-            #check if player meets goal
+            # Check if player meets goal
             if user_money >= money_goal:
                 gamerun = False
-
-            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-                mouse = pygame.mouse.get_pos()
-                checkUpgrades(B1_rect, B2_rect, B3_rect, L1_speed, L2_speed, L3_speed, mouse)
-                print(mouse)
             
             # Exit button
             if event.type == pygame.MOUSEBUTTONDOWN:
@@ -186,31 +200,31 @@ if __name__ == "__main__":
         L1_xpos += L1_speed            
         if L1_xpos > load_limit:
             
-            addMoney(user_money, L1_Amt)
+            user_money += L1_Amt
             L1_xpos = start_x
             
-            pygame.draw.rect(screen, 'tan', (L1_xpos, L1_ypos, 740, bar_height))
+            pygame.draw.rect(screen, 'white', (L1_xpos, L1_ypos, 740, bar_height))
         screen.blit(L1_Bar,(L1_xpos,L1_ypos))
         
         # Loading bar 2
         L2_xpos += L2_speed
         if L2_xpos > load_limit:
             
-            addMoney(user_money, L2_Amt)
+            user_money += L2_Amt
             L2_xpos = start_x
             
-            pygame.draw.rect(screen, 'tan', (L2_xpos, L2_ypos, 740, bar_height))
+            pygame.draw.rect(screen, 'white', (L2_xpos, L2_ypos, 740, bar_height))
         screen.blit(L2_Bar,(L2_xpos,L2_ypos))
 
         # Loading bar 3
         L3_xpos += L3_speed
         if L3_xpos > load_limit:
             
-            addMoney(user_money, L3_Amt)
+            user_money += L3_Amt
             L3_xpos = start_x
             
 
-            pygame.draw.rect(screen, 'tan', (L3_xpos, L3_ypos, 740, bar_height))
+            pygame.draw.rect(screen, 'white', (L3_xpos, L3_ypos, 740, bar_height))
         screen.blit(L3_Bar,(L3_xpos,L3_ypos))
 #-------------------------------------------------------------------------------------------------------------------------------
         
