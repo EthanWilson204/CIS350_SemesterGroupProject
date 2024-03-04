@@ -22,8 +22,8 @@ CLOCK = pygame.time.Clock()
 if __name__ == "__main__":
 
     #main display
-    screen_width = 1600
-    screen_height = 900
+    screen_width = 1300
+    screen_height = 750
     screen = pygame.display.set_mode((screen_width,screen_height))
     screen.fill('Tan')
     pygame.display.set_caption("Main Game")
@@ -34,19 +34,19 @@ if __name__ == "__main__":
 
     #define bar positions
     L1_xpos = start_x
-    L1_ypos = 325
+    L1_ypos = 300
     L2_xpos = start_x
-    L2_ypos = 425
+    L2_ypos = 450
     L3_xpos = start_x
-    L3_ypos = 525
+    L3_ypos = 600
     bar_length = 50
     bar_height = 50
 
 
     #define bar speeds
     L1_speed = 3.0
-    L2_speed = 2.0
-    L3_speed = 1.0
+    L2_speed = 1.5
+    L3_speed = 0.75
 
     #Draw buttons
     #bar height and length are 50
@@ -84,23 +84,50 @@ if __name__ == "__main__":
     L2_Amt = 200
     L3_Amt = 300
 
+    # Quit button
+    font1 = pygame.font.SysFont('Ariel',70,bold=False)
+    surf1 = font1.render('Quit', True, 'black')
+    exitButton = pygame.Rect(1180,10,110,60)
+
+#=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+#=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- GAME RUN -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+#=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+    
     #Run the events in game
     gamerun = True
+
     while gamerun:
 
-        #check if player quit
+        
         for event in pygame.event.get():
+            #check if player quit
             if event.type == pygame.QUIT:
                 pygame.quit()
+
+            #check if player meets goal
             if user_money >= money_goal:
                 gamerun = False
+            
+            # Exit button
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                    if exitButton.collidepoint(event.pos):
+                        pygame.quit()
+
+#-------------------------------------------------------------------------------------------------------------------------------
+        # Exit button
+        a,b = pygame.mouse.get_pos()
+        if exitButton.x <= a <= exitButton.x + 110 and exitButton.y <= b <= exitButton.y + 60:
+            pygame.draw.rect(screen,(110,0,0),exitButton)
+        else:
+            pygame.draw.rect(screen,(200,0,0),exitButton)
+        screen.blit(surf1,(exitButton.x+5, exitButton.y+5))
 
     
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-            
             mouse = pygame.mouse.get_pos()
             checkUpgrades(B1_rect, B2_rect, B3_rect, L1_speed, L2_speed, L3_speed, mouse)
             print(mouse)
+#-------------------------------------------------------------------------------------------------------------------------------
             
         #loading bar 1
         #animate bar moving
