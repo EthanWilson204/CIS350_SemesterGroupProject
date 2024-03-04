@@ -25,7 +25,7 @@ if __name__ == "__main__":
     screen_width = 1300
     screen_height = 750
     screen = pygame.display.set_mode((screen_width,screen_height))
-    screen.fill('Tan')
+    screen.fill('Dark Grey')
     pygame.display.set_caption("Main Game")
 
     #define start and end for bars
@@ -50,32 +50,32 @@ if __name__ == "__main__":
 
     #Draw buttons
     #bar height and length are 50
-    B1_surf = pygame.Surface((142, 50))
-    B2_surf = pygame.Surface((142, 50))
-    B3_surf = pygame.Surface((142, 50))
+    B1_surf = pygame.Surface((0,0))
+    B2_surf = pygame.Surface((0,0))
+    B3_surf = pygame.Surface((0,0))
+
+    B1_surf.fill('black')
+    B2_surf.fill('black')
+    B3_surf.fill('black')
     
     #get rectangles to make button functional
     B1_rect = B1_surf.get_rect()
     B2_rect = B2_surf.get_rect()
     B3_rect = B3_surf.get_rect()
     
-    B1_surf.fill('black')
-    B2_surf.fill('black')
-    B3_surf.fill('black')
-    
     SetBackground(screen, screen_width, screen_height, B1_surf, B2_surf, B3_surf, L1_xpos, L2_xpos, L3_xpos, L1_ypos, L2_ypos, L3_ypos)
     
     #loading bar 1
     L1_Bar = pygame.Surface((bar_length,bar_height))
-    L1_Bar.fill('black')
+    L1_Bar.fill('red')
 
     #loading bar 2
     L2_Bar = L1_Bar.copy()
-    L2_Bar.fill('blue')
+    L2_Bar.fill('green')
 
     #loading bar 3
     L3_Bar = L1_Bar.copy()
-    L3_Bar.fill('green')
+    L3_Bar.fill('blue')
 
     #Define money variables
     money_goal = 1000 #$1,000,000,000
@@ -85,9 +85,24 @@ if __name__ == "__main__":
     L3_Amt = 300
 
     # Quit button
-    font1 = pygame.font.SysFont('Ariel',70,bold=False)
-    surf1 = font1.render('Quit', True, 'black')
+    font0 = pygame.font.SysFont('Ariel',70,bold=False)
+    surf0 = font0.render('Quit', True, 'black')
     exitButton = pygame.Rect(1180,10,110,60)
+
+    # Upgrade Bar 1 button
+    font1 = pygame.font.SysFont('Ariel',50,bold=False)
+    surf1 = font1.render('Upgrade', True, 'white')
+    up1Button = pygame.Rect(1100,300,150,50)
+
+    # Upgrade Bar 2 button
+    font2 = pygame.font.SysFont('Ariel',50,bold=False)
+    surf2 = font2.render('Upgrade', True, 'white')
+    up2Button = pygame.Rect(1100,450,150,50)
+
+    # Upgrade Bar 3 button
+    font3 = pygame.font.SysFont('Ariel',50,bold=False)
+    surf3 = font3.render('Upgrade', True, 'white')
+    up3Button = pygame.Rect(1100,600,150,50)
 
 #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- GAME RUN -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
@@ -97,7 +112,6 @@ if __name__ == "__main__":
     gamerun = True
 
     while gamerun:
-
         
         for event in pygame.event.get():
             #check if player quit
@@ -107,30 +121,68 @@ if __name__ == "__main__":
             #check if player meets goal
             if user_money >= money_goal:
                 gamerun = False
+
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                mouse = pygame.mouse.get_pos()
+                checkUpgrades(B1_rect, B2_rect, B3_rect, L1_speed, L2_speed, L3_speed, mouse)
+                print(mouse)
             
             # Exit button
             if event.type == pygame.MOUSEBUTTONDOWN:
                     if exitButton.collidepoint(event.pos):
                         pygame.quit()
 
+            # Upgrade Bar 1 button
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                    if up1Button.collidepoint(event.pos):
+                        L1_speed *= 1.3
+
+            # Upgrade Bar 2 button
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                    if up2Button.collidepoint(event.pos):
+                        L2_speed *= 1.3
+
+            # Upgrade Bar 3 button
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                    if up3Button.collidepoint(event.pos):
+                        L3_speed *= 1.3
+
 #-------------------------------------------------------------------------------------------------------------------------------
         # Exit button
         a,b = pygame.mouse.get_pos()
         if exitButton.x <= a <= exitButton.x + 110 and exitButton.y <= b <= exitButton.y + 60:
-            pygame.draw.rect(screen,(110,0,0),exitButton)
+            pygame.draw.rect(screen,(255,25,25),exitButton)
         else:
             pygame.draw.rect(screen,(200,0,0),exitButton)
-        screen.blit(surf1,(exitButton.x+5, exitButton.y+5))
-
-    
-        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-            mouse = pygame.mouse.get_pos()
-            checkUpgrades(B1_rect, B2_rect, B3_rect, L1_speed, L2_speed, L3_speed, mouse)
-            print(mouse)
+        screen.blit(surf0,(exitButton.x+5, exitButton.y+5))  
 #-------------------------------------------------------------------------------------------------------------------------------
-            
-        #loading bar 1
-        #animate bar moving
+        # Upgrade Bar 1 button
+        a,b = pygame.mouse.get_pos()
+        if up1Button.x <= a <= up1Button.x + 150 and up1Button.y <= b <= up1Button.y + 50:
+            pygame.draw.rect(screen,(100,100,100),up1Button)
+        else:
+            pygame.draw.rect(screen,(0,0,0),up1Button)
+        screen.blit(surf1,(up1Button.x+5, up1Button.y+5))
+#-------------------------------------------------------------------------------------------------------------------------------        
+        # Upgrade Bar 2 button
+        a,b = pygame.mouse.get_pos()
+        if up2Button.x <= a <= up2Button.x + 150 and up2Button.y <= b <= up2Button.y + 50:
+            pygame.draw.rect(screen,(100,100,100),up2Button)
+        else:
+            pygame.draw.rect(screen,(0,0,0),up2Button)
+        screen.blit(surf2,(up2Button.x+5, up2Button.y+5))
+#-------------------------------------------------------------------------------------------------------------------------------        
+        # Upgrade Bar 3 button
+        a,b = pygame.mouse.get_pos()
+        if up3Button.x <= a <= up3Button.x + 150 and up3Button.y <= b <= up3Button.y + 50:
+            pygame.draw.rect(screen,(100,100,100),up3Button)
+        else:
+            pygame.draw.rect(screen,(0,0,0),up3Button)
+        screen.blit(surf3,(up3Button.x+5, up3Button.y+5))
+#-------------------------------------------------------------------------------------------------------------------------------
+        #Loading Bar Animations
+
+        # Loading bar 1
         L1_xpos += L1_speed            
         if L1_xpos > load_limit:
             
@@ -140,8 +192,7 @@ if __name__ == "__main__":
             pygame.draw.rect(screen, 'tan', (L1_xpos, L1_ypos, 740, bar_height))
         screen.blit(L1_Bar,(L1_xpos,L1_ypos))
         
-        #loading bar 2
-        #animate bar moving
+        # Loading bar 2
         L2_xpos += L2_speed
         if L2_xpos > load_limit:
             
@@ -151,8 +202,7 @@ if __name__ == "__main__":
             pygame.draw.rect(screen, 'tan', (L2_xpos, L2_ypos, 740, bar_height))
         screen.blit(L2_Bar,(L2_xpos,L2_ypos))
 
-        #loading bar 3
-        #animate bar moving
+        # Loading bar 3
         L3_xpos += L3_speed
         if L3_xpos > load_limit:
             
@@ -162,6 +212,7 @@ if __name__ == "__main__":
 
             pygame.draw.rect(screen, 'tan', (L3_xpos, L3_ypos, 740, bar_height))
         screen.blit(L3_Bar,(L3_xpos,L3_ypos))
+#-------------------------------------------------------------------------------------------------------------------------------
         
         pygame.display.update()
         CLOCK.tick(60)     

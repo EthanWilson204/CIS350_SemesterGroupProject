@@ -9,17 +9,13 @@ def SetBackground(screen, load_limit, screen_width, screen_height, L1_xpos, L2_x
     bar_height = 50    
 
     #bar background
-    pygame.draw.rect(screen, 'red', (L1_xpos-15, L1_ypos-15, 780, bar_height+30))
-    pygame.draw.rect(screen, 'red', (L2_xpos-15, L2_ypos-15, 780, bar_height+30))
-    pygame.draw.rect(screen, 'red', (L3_xpos-15, L3_ypos-15, 780, bar_height+30))
+    pygame.draw.rect(screen, 'black', (L1_xpos-15, L1_ypos-15, 780, bar_height+30))
+    pygame.draw.rect(screen, 'black', (L2_xpos-15, L2_ypos-15, 780, bar_height+30))
+    pygame.draw.rect(screen, 'black', (L3_xpos-15, L3_ypos-15, 780, bar_height+30))
     pygame.draw.rect(screen, 'tan', (L1_xpos, L1_ypos, 740, bar_height))
     pygame.draw.rect(screen, 'tan', (L2_xpos, L2_ypos, 740, bar_height))
     pygame.draw.rect(screen, 'tan', (L3_xpos, L3_ypos, 740, bar_height))
 
-    #button backbgrounds
-    pygame.draw.rect(screen, "black", (load_limit + 100, L1_ypos - 15,bar_length + 100, bar_height+30))
-    pygame.draw.rect(screen, "black", (load_limit + 100, L2_ypos - 15,bar_length + 100, bar_height+30))
-    pygame.draw.rect(screen, "black", (load_limit + 100, L3_ypos - 15,bar_length + 100, bar_height+30))
     
     #upper bar display
     Profile_Bar = pygame.Surface((screen_width, 200))
