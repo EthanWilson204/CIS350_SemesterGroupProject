@@ -66,6 +66,18 @@ if __name__ == "__main__":
     SetBackground(screen, screen_width, screen_height, B1_surf, B2_surf, B3_surf, L1_xpos, L2_xpos, L3_xpos, L1_ypos, L2_ypos, L3_ypos)
 
 #-------------------------------------------------------------------------------------------------------------------------------
+        
+    def displayTimer():
+         timerDisplay = pygame.font.SysFont('Ariel',60)
+         timer = pygame.time.get_ticks()
+         timer /= 1000
+         timer = round(timer)
+
+
+         displayTimer = timerDisplay.render(str(timer), True, (255,255,255))
+         screen.blit(displayTimer, (1180,75))
+
+#-------------------------------------------------------------------------------------------------------------------------------
 # Loading Bars
     # Bar 1
     L1_Bar = pygame.Surface((bar_length,bar_height))
@@ -85,7 +97,7 @@ if __name__ == "__main__":
     L2ValueDisplay = pygame.font.SysFont('Ariel',40)
     def displayL2Value(L2Value):
          L2Value = L2ValueDisplay.render("$" + str(L2Value), True, (0,0,0))
-         screen.blit(L2Value, (660,505))
+         screen.blit(L2Value, (660,510))
 
 
     # Bar 3
@@ -163,7 +175,7 @@ if __name__ == "__main__":
     gamerun = True
 
     while gamerun:
-        
+
         for event in pygame.event.get():
 
             # Check if player quit
@@ -174,10 +186,12 @@ if __name__ == "__main__":
             if user_money >= money_goal:
                 gamerun = False
             
-            # Display Money
+            # Display Money and Timer
             blitScoreboard(screen, screen_width, screen_height)
             user_money = round(user_money, 2)
             displayMoney(user_money)
+            #TODO Timer should start AFTER entering name and color
+            displayTimer()
 
             # Display value of each loading bar
             displayL1Value(L1Value)
@@ -204,7 +218,7 @@ if __name__ == "__main__":
                         if up1Button.collidepoint(event.pos):
                             L1_speed *= 1.3
                             user_money -= up1Price
-                            up1Price *= 1.6
+                            up1Price *= 1.2
 
             # Upgrade Bar 2 button
             if user_money >= up2Price:
@@ -212,7 +226,7 @@ if __name__ == "__main__":
                         if up2Button.collidepoint(event.pos):
                             L2_speed *= 1.3
                             user_money -= up2Price
-                            up2Price *= 1.6
+                            up2Price *= 1.2
 
             # Upgrade Bar 3 button
             if user_money >= up3Price:
@@ -220,7 +234,7 @@ if __name__ == "__main__":
                         if up3Button.collidepoint(event.pos):
                             L3_speed *= 1.3
                             user_money -= up3Price
-                            up3Price *= 1.6
+                            up3Price *= 1.2
 
 #-------------------------------------------------------------------------------------------------------------------------------
         # Exit button
@@ -292,5 +306,4 @@ if __name__ == "__main__":
         pygame.display.update()
         CLOCK.tick(60)     
 
-    else:
-         pygame.quit()
+    pygame.quit()
