@@ -71,25 +71,42 @@ if __name__ == "__main__":
     L1_Bar = pygame.Surface((bar_length,bar_height))
     L1_Bar.fill('red')
 
+    L1Value = 100
+    L1ValueDisplay = pygame.font.SysFont('Ariel',40)
+    def displayL1Value(L1Value):
+         L1Value = L1ValueDisplay.render("$" + str(L1Value), True, (0,0,0))
+         screen.blit(L1Value, (660,360))
+
     # Bar 2
     L2_Bar = L1_Bar.copy()
     L2_Bar.fill('green')
 
+    L2Value = 200
+    L2ValueDisplay = pygame.font.SysFont('Ariel',40)
+    def displayL2Value(L2Value):
+         L2Value = L2ValueDisplay.render("$" + str(L2Value), True, (0,0,0))
+         screen.blit(L2Value, (660,505))
+
+
     # Bar 3
     L3_Bar = L1_Bar.copy()
     L3_Bar.fill('blue')
+
+    L3Value = 300
+    L3ValueDisplay = pygame.font.SysFont('Ariel',40)
+    def displayL3Value(L3Value):
+         L3Value = L3ValueDisplay.render("$" + str(L3Value), True, (0,0,0))
+         screen.blit(L3Value, (660,660))
 #-------------------------------------------------------------------------------------------------------------------------------
 # Money System
     # Define money variables
-    money_goal = 1000000000 #$1,000,000,000
+    money_goal = 1000000 #$1,000,000
     user_money = 0
     L1_Amt = 100
     L2_Amt = 200
     L3_Amt = 300
 
     moneyDisplay = pygame.font.SysFont('Ariel',100)
-    moneyDisplayX = 300
-    moneyDisplayY = 70
 
     def displayMoney (money):
          money = moneyDisplay.render("$" + str(money), True, (255,255,255))
@@ -106,16 +123,37 @@ if __name__ == "__main__":
     font1 = pygame.font.SysFont('Ariel',50,bold=False)
     surf1 = font1.render('Upgrade', True, 'white')
     up1Button = pygame.Rect(1100,300,150,50)
+    up1Price = 300.0
 
     # Upgrade Bar 2 button
     font2 = pygame.font.SysFont('Ariel',50,bold=False)
     surf2 = font2.render('Upgrade', True, 'white')
     up2Button = pygame.Rect(1100,450,150,50)
+    up2Price = 500.0
 
     # Upgrade Bar 3 button
     font3 = pygame.font.SysFont('Ariel',50,bold=False)
     surf3 = font3.render('Upgrade', True, 'white')
     up3Button = pygame.Rect(1100,600,150,50)
+    up3Price = 700.0
+
+    # Display Upgrade Bar 1 Price
+    up1PriceDisplay = pygame.font.SysFont('Ariel',40)
+    def displayup1Price (up1Price):
+         up1Price = up1PriceDisplay.render("$" + str(up1Price), True, (0,0,0))
+         screen.blit(up1Price, (1100,355))
+
+    # Display Upgrade Bar 2 Price
+    up2PriceDisplay = pygame.font.SysFont('Ariel',40)
+    def displayup2Price (up2Price):
+         up2Price = up2PriceDisplay.render("$" + str(up2Price), True, (0,0,0))
+         screen.blit(up2Price, (1100,505))
+
+    # Display Upgrade Bar 3 Price
+    up3PriceDisplay = pygame.font.SysFont('Ariel',40)
+    def displayup3Price (up3Price):
+         up3Price = up3PriceDisplay.render("$" + str(up3Price), True, (0,0,0))
+         screen.blit(up3Price, (1100,655))
 
 #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- GAME RUN -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
@@ -127,11 +165,6 @@ if __name__ == "__main__":
     while gamerun:
         
         for event in pygame.event.get():
-            
-            # Display Money
-            blitScoreboard(screen, screen_width, screen_height)
-            displayMoney(user_money)
-            
 
             # Check if player quit
             if event.type == pygame.QUIT:
@@ -141,25 +174,53 @@ if __name__ == "__main__":
             if user_money >= money_goal:
                 gamerun = False
             
+            # Display Money
+            blitScoreboard(screen, screen_width, screen_height)
+            user_money = round(user_money, 2)
+            displayMoney(user_money)
+
+            # Display value of each loading bar
+            displayL1Value(L1Value)
+            displayL2Value(L2Value)
+            displayL3Value(L3Value)
+
+            # Display Upgrade Bar Prices
+            blitUpPrices(screen)
+            up1Price = round(up1Price, 2)
+            displayup1Price(up1Price)
+            up2Price = round(up2Price, 2)
+            displayup2Price(up2Price)
+            up3Price = round(up3Price, 2)
+            displayup3Price(up3Price)
+            
             # Exit button
             if event.type == pygame.MOUSEBUTTONDOWN:
                     if exitButton.collidepoint(event.pos):
                         pygame.quit()
 
             # Upgrade Bar 1 button
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                    if up1Button.collidepoint(event.pos):
-                        L1_speed *= 1.3
+            if user_money >= up1Price:
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                        if up1Button.collidepoint(event.pos):
+                            L1_speed *= 1.3
+                            user_money -= up1Price
+                            up1Price *= 1.6
 
             # Upgrade Bar 2 button
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                    if up2Button.collidepoint(event.pos):
-                        L2_speed *= 1.3
+            if user_money >= up2Price:
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                        if up2Button.collidepoint(event.pos):
+                            L2_speed *= 1.3
+                            user_money -= up2Price
+                            up2Price *= 1.6
 
             # Upgrade Bar 3 button
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                    if up3Button.collidepoint(event.pos):
-                        L3_speed *= 1.3
+            if user_money >= up3Price:
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                        if up3Button.collidepoint(event.pos):
+                            L3_speed *= 1.3
+                            user_money -= up3Price
+                            up3Price *= 1.6
 
 #-------------------------------------------------------------------------------------------------------------------------------
         # Exit button
@@ -231,5 +292,5 @@ if __name__ == "__main__":
         pygame.display.update()
         CLOCK.tick(60)     
 
-    pygame.quit()
-
+    else:
+         pygame.quit()

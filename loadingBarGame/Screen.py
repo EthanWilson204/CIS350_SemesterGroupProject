@@ -55,3 +55,8 @@ def blitScoreboard(screen, screen_width, screen_height):
     screen.blit(Profile_Bar, (0,0))
     screen.blit(Profile_Corner, (0,0))
     screen.blit(Left_Side_Bar, (0,200))
+
+def blitUpPrices(screen):
+    pygame.draw.rect(screen, 'dark grey', (1100, 355, 300, 100))
+    pygame.draw.rect(screen, 'dark grey', (1100, 505, 300, 100))
+    pygame.draw.rect(screen, 'dark grey', (1100, 655, 300, 100))
