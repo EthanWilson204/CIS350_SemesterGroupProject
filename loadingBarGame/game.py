@@ -12,6 +12,7 @@ fast as possible.
 '''
 #imports
 import pygame
+from sys import exit
 from Screen import *
 from GameFunctions import *
 
@@ -44,9 +45,9 @@ if __name__ == "__main__":
 
 
     #define bar speeds
-    L1_speed = 3.0
-    L2_speed = 1.5
-    L3_speed = 0.75
+    L1_speed = 0 #going to 3.0
+    L2_speed = 0 #going to 1.5
+    L3_speed = 0 #going to 0.75
 
     #Draw buttons
     #bar height and length are 50
@@ -75,7 +76,7 @@ if __name__ == "__main__":
 
 
          displayTimer = timerDisplay.render(str(timer), True, (255,255,255))
-         screen.blit(displayTimer, (1180,75))
+         screen.blit(displayTimer, (1180,75))#blit stands for block image transfer... i.e. put one surface on another
 
 #-------------------------------------------------------------------------------------------------------------------------------
 # Loading Bars
@@ -113,7 +114,7 @@ if __name__ == "__main__":
 # Money System
     # Define money variables
     money_goal = 1000000 #$1,000,000
-    user_money = 0
+    user_money = 999750 #TODO set back to 0 for the game release
     L1_Amt = 100
     L2_Amt = 200
     L3_Amt = 300
@@ -135,7 +136,7 @@ if __name__ == "__main__":
     font1 = pygame.font.SysFont('Ariel',50,bold=False)
     surf1 = font1.render('Upgrade', True, 'white')
     up1Button = pygame.Rect(1100,300,150,50)
-    up1Price = 300.0
+    up1Price = 0.0 #then go to 300.0
 
     # Upgrade Bar 2 button
     font2 = pygame.font.SysFont('Ariel',50,bold=False)
@@ -173,7 +174,7 @@ if __name__ == "__main__":
     
     #Run the events in game
     gamerun = True
-
+    ticknum = 60#60 fps
     while gamerun:
 
         for event in pygame.event.get():
@@ -181,17 +182,29 @@ if __name__ == "__main__":
             # Check if player quit
             if event.type == pygame.QUIT:
                 pygame.quit()
+                exit()
 
             # Check if player meets goal
             if user_money >= money_goal:
-                gamerun = False
+                #TODO return a win screen with final score
+                #close game after a pause
+                pygame.time.delay(2628000000)#delays for 1 real life month
+                #tried setting the tick to a ridiculously high and low number
+                #DO NOT DO THAT
+                #It did not solve the issue but created lots of issues
+                Final_Time = pygame.time.Clock.get_time(CLOCK)
+                fontFT = pygame.font.SysFont('Ariel',80,bold=False)
+                surfFT = fontFT.render("Final Time: " + str(Final_Time), True, 'blueviolet')
+                screen.blit(surfFT, (screen_width/5, screen_height/2))             
+                #gamerun = False
+    
             
             # Display Money and Timer
             blitScoreboard(screen, screen_width, screen_height)
             user_money = round(user_money, 2)
             displayMoney(user_money)
             #TODO Timer should start AFTER entering name and color
-            displayTimer()
+            #displayTimer()
 
             # Display value of each loading bar
             displayL1Value(L1Value)
@@ -211,20 +224,29 @@ if __name__ == "__main__":
             if event.type == pygame.MOUSEBUTTONDOWN:
                     if exitButton.collidepoint(event.pos):
                         pygame.quit()
+                        exit()
 
             # Upgrade Bar 1 button
             if user_money >= up1Price:
                 if event.type == pygame.MOUSEBUTTONDOWN:
                         if up1Button.collidepoint(event.pos):
-                            L1_speed *= 1.3
-                            user_money -= up1Price
-                            up1Price *= 1.2
+                            if L1_speed == 0:
+                                 L1_speed = 3.0
+                                 up1Price = 300.0
+                                 displayTimer()
+                            else:
+                                L1_speed *= 1.3
+                                user_money -= up1Price
+                                up1Price *= 1.2
 
             # Upgrade Bar 2 button
             if user_money >= up2Price:
                 if event.type == pygame.MOUSEBUTTONDOWN:
                         if up2Button.collidepoint(event.pos):
-                            L2_speed *= 1.3
+                            if L2_speed == 0:
+                                 L2_speed = 1.5
+                            else:
+                                L2_speed *= 1.3
                             user_money -= up2Price
                             up2Price *= 1.2
 
@@ -232,7 +254,10 @@ if __name__ == "__main__":
             if user_money >= up3Price:
                 if event.type == pygame.MOUSEBUTTONDOWN:
                         if up3Button.collidepoint(event.pos):
-                            L3_speed *= 1.3
+                            if L3_speed == 0:
+                                 L3_speed = 0.75
+                            else:
+                                L3_speed *= 1.3
                             user_money -= up3Price
                             up3Price *= 1.2
 
@@ -304,6 +329,7 @@ if __name__ == "__main__":
 #-------------------------------------------------------------------------------------------------------------------------------
         
         pygame.display.update()
-        CLOCK.tick(60)     
+        CLOCK.tick(ticknum)#cap framerate at 60 fps     
 
     pygame.quit()
+    exit()
