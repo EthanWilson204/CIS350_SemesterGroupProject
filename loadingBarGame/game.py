@@ -193,9 +193,11 @@ if __name__ == "__main__":
             #DO NOT DO THAT
             #It did not solve the issue but created lots of issues
             Final_Time = pygame.time.Clock.get_time(CLOCK)
-            fontFT = pygame.font.SysFont('Ariel',80,bold=False)
+            fontFT = pygame.font.SysFont('Ariel',90,bold=False)
             surfFT = fontFT.render("Final Time: " + str(Final_Time), True, 'blueviolet')
-            screen.blit(surfFT, (screen_width/5, screen_height/2))             
+            #TODO determine if we want the following line of code
+            #screen.blit(surfFT, (screen_width/5, screen_height/2))     
+            screen.blit(surfFT, (725,70))        
             #gamerun = False
             
             #stop bars from loading and stop earning more money once game is won
