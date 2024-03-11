@@ -114,7 +114,7 @@ if __name__ == "__main__":
 # Money System
     # Define money variables
     money_goal = 1000000 #$1,000,000
-    user_money = 999750 #TODO set back to 0 for the game release
+    user_money = 999500 #TODO set back to 0 for the game release
     L1_Amt = 100
     L2_Amt = 200
     L3_Amt = 300
@@ -184,29 +184,26 @@ if __name__ == "__main__":
         #TODO Timer should start AFTER entering name and color
         #displayTimer()
 
+     # Check if player meets goal
+        if user_money >= money_goal:
+            #TODO return a win screen with final score
+            #close game after a pause
+            pygame.time.delay(2628000000)#delays for 1 real life month
+            #tried setting the tick to a ridiculously high and low number
+            #DO NOT DO THAT
+            #It did not solve the issue but created lots of issues
+            Final_Time = pygame.time.Clock.get_time(CLOCK)
+            fontFT = pygame.font.SysFont('Ariel',80,bold=False)
+            surfFT = fontFT.render("Final Time: " + str(Final_Time), True, 'blueviolet')
+            screen.blit(surfFT, (screen_width/5, screen_height/2))             
+            #gamerun = False
+
         for event in pygame.event.get():
 
             # Check if player quit
             if event.type == pygame.QUIT:
                 pygame.quit()
                 exit()
-
-            # Check if player meets goal
-            if user_money >= money_goal:
-                #TODO return a win screen with final score
-                #close game after a pause
-                pygame.time.delay(2628000000)#delays for 1 real life month
-                #tried setting the tick to a ridiculously high and low number
-                #DO NOT DO THAT
-                #It did not solve the issue but created lots of issues
-                Final_Time = pygame.time.Clock.get_time(CLOCK)
-                fontFT = pygame.font.SysFont('Ariel',80,bold=False)
-                surfFT = fontFT.render("Final Time: " + str(Final_Time), True, 'blueviolet')
-                screen.blit(surfFT, (screen_width/5, screen_height/2))             
-                #gamerun = False
-    
-            
-            
 
             # Display value of each loading bar
             displayL1Value(L1Value)
