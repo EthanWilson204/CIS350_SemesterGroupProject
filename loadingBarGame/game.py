@@ -114,7 +114,7 @@ if __name__ == "__main__":
 # Money System
     # Define money variables
     money_goal = 1000000 #$1,000,000
-    user_money = 1500 #TODO set back to 0 for the game release
+    user_money = 999500 #TODO set back to 0 for the game release
     L1_Amt = 100
     L2_Amt = 200
     L3_Amt = 300
@@ -181,7 +181,7 @@ if __name__ == "__main__":
         blitScoreboard(screen, screen_width, screen_height)
         user_money = round(user_money, 2)
         displayMoney(user_money)
-        #TODO Timer should start AFTER entering name and color
+        #TODO Timer should start AFTER entering name and color //might not need this
         #displayTimer()
 
      # Check if player meets goal
@@ -197,6 +197,11 @@ if __name__ == "__main__":
             surfFT = fontFT.render("Final Time: " + str(Final_Time), True, 'blueviolet')
             screen.blit(surfFT, (screen_width/5, screen_height/2))             
             #gamerun = False
+            
+            #stop bars from loading and stop earning more money once game is won
+            L1_speed = 0 
+            L2_speed = 0 
+            L3_speed = 0
 
         for event in pygame.event.get():
 
