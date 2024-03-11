@@ -64,7 +64,7 @@ if __name__ == "__main__":
     B2_rect = B2_surf.get_rect()
     B3_rect = B3_surf.get_rect()
     
-    SetBackground(screen, screen_width, screen_height, B1_surf, B2_surf, B3_surf, L1_xpos, L2_xpos, L3_xpos, L1_ypos, L2_ypos, L3_ypos)
+    SetBackground(screen, screen_width, screen_height, L1_xpos, L2_xpos, L3_xpos, L1_ypos, L2_ypos, L3_ypos)
 
 #-------------------------------------------------------------------------------------------------------------------------------
         
@@ -114,7 +114,7 @@ if __name__ == "__main__":
 # Money System
     # Define money variables
     money_goal = 1000000 #$1,000,000
-    user_money = 999500 #TODO set back to 0 for the game release
+    user_money = 1500 #TODO set back to 0 for the game release
     L1_Amt = 100
     L2_Amt = 200
     L3_Amt = 300
