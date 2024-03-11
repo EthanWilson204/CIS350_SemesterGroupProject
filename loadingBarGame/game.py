@@ -177,6 +177,13 @@ if __name__ == "__main__":
     ticknum = 60#60 fps
     while gamerun:
 
+    # Display Money and Timer
+        blitScoreboard(screen, screen_width, screen_height)
+        user_money = round(user_money, 2)
+        displayMoney(user_money)
+        #TODO Timer should start AFTER entering name and color
+        #displayTimer()
+
         for event in pygame.event.get():
 
             # Check if player quit
@@ -199,12 +206,7 @@ if __name__ == "__main__":
                 #gamerun = False
     
             
-            # Display Money and Timer
-            blitScoreboard(screen, screen_width, screen_height)
-            user_money = round(user_money, 2)
-            displayMoney(user_money)
-            #TODO Timer should start AFTER entering name and color
-            #displayTimer()
+            
 
             # Display value of each loading bar
             displayL1Value(L1Value)
