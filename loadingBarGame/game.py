@@ -69,7 +69,7 @@ if __name__ == "__main__":
 #-------------------------------------------------------------------------------------------------------------------------------
             
     def displayTimer():
-        surfFT = fontFT.render("Time: " + str(game_time), True, 'blueviolet')
+        surfFT = fontFT.render("Time: " + str(game_time), True, 'white')
         screen.blit(surfFT, (725,70))
     
 #-------------------------------------------------------------------------------------------------------------------------------
@@ -108,7 +108,7 @@ if __name__ == "__main__":
 # Money System
     # Define money variables
     money_goal = 1000000 #$1,000,000
-    user_money = 999500 #TODO set back to 0 for the game release
+    user_money = 999700 #TODO set back to 0 for the game release
     L1_Amt = 100
     L2_Amt = 200
     L3_Amt = 300
@@ -180,16 +180,11 @@ if __name__ == "__main__":
         blitScoreboard(screen, screen_width, screen_height)
         user_money = round(user_money, 2)
         displayMoney(user_money)
-        
-        #display active time in game
-        surfFT = fontFT.render("Time: " + str(game_time), True, 'blueviolet')
-        screen.blit(surfFT, (725,70))
+        displayTimer()
 
      # Check if player meets goal
         if user_money >= money_goal:
             
-            #stop timer
-
             #stop bars from loading and stop earning more money once game is won
             L1_speed = 0 
             L2_speed = 0 
@@ -205,8 +200,10 @@ if __name__ == "__main__":
             #update the time by one second
             if event.type == pygame.USEREVENT:
                 #check if game is started
-                if L1_speed == 0:
+                if L1_speed == 0 and user_money < 1000000:
                     game_time = 0
+                elif L1_speed == 0 and user_money >= 1000000:
+                    displayTimer()
                 else:
                     game_time += 1
 
