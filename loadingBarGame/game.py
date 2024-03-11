@@ -67,17 +67,11 @@ if __name__ == "__main__":
     SetBackground(screen, screen_width, screen_height, L1_xpos, L2_xpos, L3_xpos, L1_ypos, L2_ypos, L3_ypos)
 
 #-------------------------------------------------------------------------------------------------------------------------------
-        
+            
     def displayTimer():
-         timerDisplay = pygame.font.SysFont('Ariel',60)
-         timer = pygame.time.get_ticks()
-         timer /= 1000
-         timer = round(timer)
-
-
-         displayTimer = timerDisplay.render(str(timer), True, (255,255,255))
-         screen.blit(displayTimer, (1180,75))#blit stands for block image transfer... i.e. put one surface on another
-
+        surfFT = fontFT.render("Time: " + str(game_time), True, 'blueviolet')
+        screen.blit(surfFT, (725,70))
+    
 #-------------------------------------------------------------------------------------------------------------------------------
 # Loading Bars
     # Bar 1
@@ -172,34 +166,30 @@ if __name__ == "__main__":
 #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- GAME RUN -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     
+    #set up timer
+    game_time = 0
+    pygame.time.set_timer(pygame.USEREVENT, 1000)
+    fontFT = pygame.font.SysFont('Ariel', 100, bold=False)
+    
     #Run the events in game
     gamerun = True
-    ticknum = 60#60 fps
+    ticknum = 60 #60 fps
     while gamerun:
 
     # Display Money and Timer
         blitScoreboard(screen, screen_width, screen_height)
         user_money = round(user_money, 2)
         displayMoney(user_money)
-        #TODO Timer should start AFTER entering name and color //might not need this
-        #displayTimer()
+        
+        #display active time in game
+        surfFT = fontFT.render("Time: " + str(game_time), True, 'blueviolet')
+        screen.blit(surfFT, (725,70))
 
      # Check if player meets goal
         if user_money >= money_goal:
-            #TODO return a win screen with final score
-            #close game after a pause
-            pygame.time.delay(2628000000)#delays for 1 real life month
-            #tried setting the tick to a ridiculously high and low number
-            #DO NOT DO THAT
-            #It did not solve the issue but created lots of issues
-            Final_Time = pygame.time.Clock.get_time(CLOCK)
-            fontFT = pygame.font.SysFont('Ariel',90,bold=False)
-            surfFT = fontFT.render("Final Time: " + str(Final_Time), True, 'blueviolet')
-            #TODO determine if we want the following line of code
-            #screen.blit(surfFT, (screen_width/5, screen_height/2))     
-            screen.blit(surfFT, (725,70))        
-            #gamerun = False
             
+            #stop timer
+
             #stop bars from loading and stop earning more money once game is won
             L1_speed = 0 
             L2_speed = 0 
@@ -211,6 +201,14 @@ if __name__ == "__main__":
             if event.type == pygame.QUIT:
                 pygame.quit()
                 exit()
+            
+            #update the time by one second
+            if event.type == pygame.USEREVENT:
+                #check if game is started
+                if L1_speed == 0:
+                    game_time = 0
+                else:
+                    game_time += 1
 
             # Display value of each loading bar
             displayL1Value(L1Value)
@@ -236,10 +234,11 @@ if __name__ == "__main__":
             if user_money >= up1Price:
                 if event.type == pygame.MOUSEBUTTONDOWN:
                         if up1Button.collidepoint(event.pos):
+                            
                             if L1_speed == 0:
                                  L1_speed = 3.0
                                  up1Price = 300.0
-                                 displayTimer()
+                                
                             else:
                                 L1_speed *= 1.3
                                 user_money -= up1Price
@@ -339,3 +338,19 @@ if __name__ == "__main__":
 
     pygame.quit()
     exit()
+    
+    """
+    #TODO return a win screen with final score
+    #close game after a pause
+    pygame.time.delay(2628000000)#delays for 1 real life month
+    #tried setting the tick to a ridiculously high and low number
+    #DO NOT DO THAT
+    #It did not solve the issue but created lots of issues
+    Final_Time = pygame.time.Clock.get_time(CLOCK)
+    fontFT = pygame.font.SysFont('Ariel',90,bold=False)
+    surfFT = fontFT.render("Final Time: " + str(Final_Time), True, 'blueviolet')
+    #TODO determine if we want the following line of code
+    #screen.blit(surfFT, (screen_width/5, screen_height/2))     
+    screen.blit(surfFT, (725,70))        
+    #gamerun = False
+    """
