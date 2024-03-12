@@ -1,7 +1,7 @@
 import pygame
 from GameFunctions import TextDisplay
 
-def SetBackground(screen, screen_width, screen_height, B1_surf, B2_surf, B3_surf, L1_xpos, L2_xpos, L3_xpos, L1_ypos, L2_ypos, L3_ypos):
+def SetBackground(screen, screen_width, screen_height, L1_xpos, L2_xpos, L3_xpos, L1_ypos, L2_ypos, L3_ypos):
     
     #surface (screen overlay) displays
     

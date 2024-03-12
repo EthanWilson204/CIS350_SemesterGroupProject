@@ -335,19 +335,3 @@ if __name__ == "__main__":
 
     pygame.quit()
     exit()
-    
-    """
-    #TODO return a win screen with final score
-    #close game after a pause
-    pygame.time.delay(2628000000)#delays for 1 real life month
-    #tried setting the tick to a ridiculously high and low number
-    #DO NOT DO THAT
-    #It did not solve the issue but created lots of issues
-    Final_Time = pygame.time.Clock.get_time(CLOCK)
-    fontFT = pygame.font.SysFont('Ariel',90,bold=False)
-    surfFT = fontFT.render("Final Time: " + str(Final_Time), True, 'blueviolet')
-    #TODO determine if we want the following line of code
-    #screen.blit(surfFT, (screen_width/5, screen_height/2))     
-    screen.blit(surfFT, (725,70))        
-    #gamerun = False
-    """
