@@ -133,7 +133,7 @@ if __name__ == "__main__":
 # Money System
     # Define money variables
     money_goal = 1000000 #$1,000,000
-    user_money = 0 #TODO set back to 0 for the game release
+    user_money = 999000 #TODO set back to 0 for the game release
     L1_Amt = 100
     L2_Amt = 200
     L3_Amt = 300
@@ -172,7 +172,6 @@ if __name__ == "__main__":
     up2PriceDisplay = pygame.font.SysFont('Ariel',40)
     up3PriceDisplay = pygame.font.SysFont('Ariel',40)
     
-
 #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- GAME RUN -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -188,19 +187,18 @@ if __name__ == "__main__":
     while gamerun:
 
     # Display Money and Timer
-        blitScoreboard(screen, screen_width, screen_height)
         user_money = round(user_money, 2)
+        blitScoreboard(screen, screen_width, screen_height)
         displayMoney(user_money)
         displayTimer()
 
      # Check if player meets goal
         if user_money >= money_goal:
             
-            #stop bars from loading and stop earning more money once game is won
+            # Stop bars from loading and stop earning more money once game is won
             L1_speed = 0 
             L2_speed = 0 
             L3_speed = 0
-            # Set money to 1000000 (aesthetic to end on one million instead of some random total greater than 1000000)
             user_money = 1000000
 
         for event in pygame.event.get():
@@ -227,12 +225,14 @@ if __name__ == "__main__":
 
             # Display Upgrade Bar Prices
             blitUpPrices(screen)
-            up1Price = round(up1Price, 2)
             displayup1Price(up1Price)
-            up2Price = round(up2Price, 2)
             displayup2Price(up2Price)
-            up3Price = round(up3Price, 2)
             displayup3Price(up3Price)
+            
+            # Round Up Prices
+            up1Price = round(up1Price, 2)
+            up2Price = round(up2Price, 2)
+            up3Price = round(up3Price, 2)
             
             # Exit button
             if event.type == pygame.MOUSEBUTTONDOWN:
@@ -281,6 +281,7 @@ if __name__ == "__main__":
 
 #-------------------------------------------------------------------------------------------------------------------------------
         # Exit button
+        
         a,b = pygame.mouse.get_pos()
         if exitButton.x <= a <= exitButton.x + 110 and exitButton.y <= b <= exitButton.y + 60:
             pygame.draw.rect(screen,(255,25,25),exitButton)
@@ -289,7 +290,7 @@ if __name__ == "__main__":
         screen.blit(surf0,(exitButton.x+5, exitButton.y+5))  
 #-------------------------------------------------------------------------------------------------------------------------------
         # Upgrade Bar 1 button
-        
+    
         if up1Button.x <= a <= up1Button.x + 150 and up1Button.y <= b <= up1Button.y + 50:
             pygame.draw.rect(screen,(100,100,100),up1Button)
         else:
@@ -315,35 +316,34 @@ if __name__ == "__main__":
         #Loading Bar Animations
 
         # Loading bar 1
-        L1_xpos += L1_speed            
+        L1_xpos += L1_speed
+        L2_xpos += L2_speed
+        L3_xpos += L3_speed
+                
         if L1_xpos > load_limit:
             
             user_money += L1_Amt
             L1_xpos = start_x
-            
             pygame.draw.rect(screen, 'white', (L1_xpos, L1_ypos, 740, bar_height))
-        screen.blit(L1_Bar,(L1_xpos,L1_ypos))
         
         # Loading bar 2
-        L2_xpos += L2_speed
         if L2_xpos > load_limit:
             
             user_money += L2_Amt
             L2_xpos = start_x
-            
             pygame.draw.rect(screen, 'white', (L2_xpos, L2_ypos, 740, bar_height))
-        screen.blit(L2_Bar,(L2_xpos,L2_ypos))
 
         # Loading bar 3
-        L3_xpos += L3_speed
         if L3_xpos > load_limit:
             
             user_money += L3_Amt
             L3_xpos = start_x
-            
-
             pygame.draw.rect(screen, 'white', (L3_xpos, L3_ypos, 740, bar_height))
+            
+        screen.blit(L1_Bar,(L1_xpos,L1_ypos))
+        screen.blit(L2_Bar,(L2_xpos,L2_ypos))
         screen.blit(L3_Bar,(L3_xpos,L3_ypos))
+            
 #-------------------------------------------------------------------------------------------------------------------------------
         
         pygame.display.update()
