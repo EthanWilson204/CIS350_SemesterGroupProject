@@ -20,6 +20,46 @@ from GameFunctions import *
 pygame.init()
 CLOCK = pygame.time.Clock()
 
+#-------------------------------------------------------------------------------------------------------------------------------
+            
+def displayTimer():
+    surfFT = fontFT.render("Time: " + str(game_time), True, 'white')
+    screen.blit(surfFT, (725,70))
+    
+def displayL1Value(L1Value):
+        L1Value = L1ValueDisplay.render("$" + str(L1Value), True, (0,0,0))
+        screen.blit(L1Value, (660,360))
+        
+def displayL2Value(L2Value):
+         L2Value = L2ValueDisplay.render("$" + str(L2Value), True, (0,0,0))
+         screen.blit(L2Value, (660,510))
+         
+def displayL3Value(L3Value):
+         L3Value = L3ValueDisplay.render("$" + str(L3Value), True, (0,0,0))
+         screen.blit(L3Value, (660,660))
+         
+def displayMoney (money):
+         money = moneyDisplay.render("$" + str(money), True, (255,255,255))
+         screen.blit(money, (300,70))
+         
+# Display Upgrade Bar 1 Price
+def displayup1Price (up1Price):
+        up1Price = up1PriceDisplay.render("$" + str(up1Price), True, (0,0,0))
+        screen.blit(up1Price, (1100,355))
+
+# Display Upgrade Bar 2 Price
+def displayup2Price (up2Price):
+        up2Price = up2PriceDisplay.render("$" + str(up2Price), True, (0,0,0))
+        screen.blit(up2Price, (1100,505))
+
+# Display Upgrade Bar 3 Price
+def displayup3Price (up3Price):
+        up3Price = up3PriceDisplay.render("$" + str(up3Price), True, (0,0,0))
+        screen.blit(up3Price, (1100,655))
+         
+#-------------------------------------------------------------------------------------------------------------------------------
+
+
 if __name__ == "__main__":
 
     #main display
@@ -66,13 +106,6 @@ if __name__ == "__main__":
     
     SetBackground(screen, screen_width, screen_height, L1_xpos, L2_xpos, L3_xpos, L1_ypos, L2_ypos, L3_ypos)
 
-#-------------------------------------------------------------------------------------------------------------------------------
-            
-    def displayTimer():
-        surfFT = fontFT.render("Time: " + str(game_time), True, 'white')
-        screen.blit(surfFT, (725,70))
-    
-#-------------------------------------------------------------------------------------------------------------------------------
 # Loading Bars
     # Bar 1
     L1_Bar = pygame.Surface((bar_length,bar_height))
@@ -80,9 +113,6 @@ if __name__ == "__main__":
 
     L1Value = 100
     L1ValueDisplay = pygame.font.SysFont('Ariel',40)
-    def displayL1Value(L1Value):
-         L1Value = L1ValueDisplay.render("$" + str(L1Value), True, (0,0,0))
-         screen.blit(L1Value, (660,360))
 
     # Bar 2
     L2_Bar = L1_Bar.copy()
@@ -90,10 +120,6 @@ if __name__ == "__main__":
 
     L2Value = 200
     L2ValueDisplay = pygame.font.SysFont('Ariel',40)
-    def displayL2Value(L2Value):
-         L2Value = L2ValueDisplay.render("$" + str(L2Value), True, (0,0,0))
-         screen.blit(L2Value, (660,510))
-
 
     # Bar 3
     L3_Bar = L1_Bar.copy()
@@ -101,9 +127,7 @@ if __name__ == "__main__":
 
     L3Value = 300
     L3ValueDisplay = pygame.font.SysFont('Ariel',40)
-    def displayL3Value(L3Value):
-         L3Value = L3ValueDisplay.render("$" + str(L3Value), True, (0,0,0))
-         screen.blit(L3Value, (660,660))
+    
 #-------------------------------------------------------------------------------------------------------------------------------
 # Money System
     # Define money variables
@@ -115,9 +139,6 @@ if __name__ == "__main__":
 
     moneyDisplay = pygame.font.SysFont('Ariel',100)
 
-    def displayMoney (money):
-         money = moneyDisplay.render("$" + str(money), True, (255,255,255))
-         screen.blit(money, (300,70))
 
 #-------------------------------------------------------------------------------------------------------------------------------
 # Buttons
@@ -144,23 +165,11 @@ if __name__ == "__main__":
     up3Button = pygame.Rect(1100,600,150,50)
     up3Price = 700.0
 
-    # Display Upgrade Bar 1 Price
+    # Fonts for price display
     up1PriceDisplay = pygame.font.SysFont('Ariel',40)
-    def displayup1Price (up1Price):
-         up1Price = up1PriceDisplay.render("$" + str(up1Price), True, (0,0,0))
-         screen.blit(up1Price, (1100,355))
-
-    # Display Upgrade Bar 2 Price
     up2PriceDisplay = pygame.font.SysFont('Ariel',40)
-    def displayup2Price (up2Price):
-         up2Price = up2PriceDisplay.render("$" + str(up2Price), True, (0,0,0))
-         screen.blit(up2Price, (1100,505))
-
-    # Display Upgrade Bar 3 Price
     up3PriceDisplay = pygame.font.SysFont('Ariel',40)
-    def displayup3Price (up3Price):
-         up3Price = up3PriceDisplay.render("$" + str(up3Price), True, (0,0,0))
-         screen.blit(up3Price, (1100,655))
+    
 
 #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- GAME RUN -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
@@ -273,7 +282,7 @@ if __name__ == "__main__":
         screen.blit(surf0,(exitButton.x+5, exitButton.y+5))  
 #-------------------------------------------------------------------------------------------------------------------------------
         # Upgrade Bar 1 button
-        a,b = pygame.mouse.get_pos()
+        
         if up1Button.x <= a <= up1Button.x + 150 and up1Button.y <= b <= up1Button.y + 50:
             pygame.draw.rect(screen,(100,100,100),up1Button)
         else:
@@ -281,7 +290,7 @@ if __name__ == "__main__":
         screen.blit(surf1,(up1Button.x+5, up1Button.y+5))
 #-------------------------------------------------------------------------------------------------------------------------------        
         # Upgrade Bar 2 button
-        a,b = pygame.mouse.get_pos()
+        
         if up2Button.x <= a <= up2Button.x + 150 and up2Button.y <= b <= up2Button.y + 50:
             pygame.draw.rect(screen,(100,100,100),up2Button)
         else:
@@ -289,7 +298,7 @@ if __name__ == "__main__":
         screen.blit(surf2,(up2Button.x+5, up2Button.y+5))
 #-------------------------------------------------------------------------------------------------------------------------------        
         # Upgrade Bar 3 button
-        a,b = pygame.mouse.get_pos()
+        
         if up3Button.x <= a <= up3Button.x + 150 and up3Button.y <= b <= up3Button.y + 50:
             pygame.draw.rect(screen,(100,100,100),up3Button)
         else:
