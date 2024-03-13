@@ -70,7 +70,7 @@ if __name__ == "__main__":
             
     def displayTimer():
         surfFT = fontFT.render("Time: " + str(game_time), True, 'white')
-        screen.blit(surfFT, (725,70))
+        screen.blit(surfFT, (850,70))
     
 #-------------------------------------------------------------------------------------------------------------------------------
 # Loading Bars
@@ -108,7 +108,7 @@ if __name__ == "__main__":
 # Money System
     # Define money variables
     money_goal = 1000000 #$1,000,000
-    user_money = 999700 #TODO set back to 0 for the game release
+    user_money = 0 #TODO set back to 0 for the game release
     L1_Amt = 100
     L2_Amt = 200
     L3_Amt = 300
@@ -136,13 +136,13 @@ if __name__ == "__main__":
     font2 = pygame.font.SysFont('Ariel',50,bold=False)
     surf2 = font2.render('Upgrade', True, 'white')
     up2Button = pygame.Rect(1100,450,150,50)
-    up2Price = 500.0
+    up2Price = 1000.0
 
     # Upgrade Bar 3 button
     font3 = pygame.font.SysFont('Ariel',50,bold=False)
     surf3 = font3.render('Upgrade', True, 'white')
     up3Button = pygame.Rect(1100,600,150,50)
-    up3Price = 700.0
+    up3Price = 2000.0
 
     # Display Upgrade Bar 1 Price
     up1PriceDisplay = pygame.font.SysFont('Ariel',40)
@@ -189,6 +189,8 @@ if __name__ == "__main__":
             L1_speed = 0 
             L2_speed = 0 
             L3_speed = 0
+            # Set money to 1000000 (aesthetic to end on one million instead of some random total greater than 1000000)
+            user_money = 1000000
 
         for event in pygame.event.get():
 
@@ -235,7 +237,6 @@ if __name__ == "__main__":
                             if L1_speed == 0:
                                  L1_speed = 3.0
                                  up1Price = 300.0
-                                
                             else:
                                 L1_speed *= 1.3
                                 user_money -= up1Price
@@ -247,10 +248,12 @@ if __name__ == "__main__":
                         if up2Button.collidepoint(event.pos):
                             if L2_speed == 0:
                                  L2_speed = 1.5
+                                 up2Price = 500.0
+                                 user_money -= 1000
                             else:
                                 L2_speed *= 1.3
-                            user_money -= up2Price
-                            up2Price *= 1.2
+                                user_money -= up2Price
+                                up2Price *= 1.2
 
             # Upgrade Bar 3 button
             if user_money >= up3Price:
@@ -258,10 +261,12 @@ if __name__ == "__main__":
                         if up3Button.collidepoint(event.pos):
                             if L3_speed == 0:
                                  L3_speed = 0.75
+                                 up3Price = 700.0
+                                 user_money -= 2000
                             else:
                                 L3_speed *= 1.3
-                            user_money -= up3Price
-                            up3Price *= 1.2
+                                user_money -= up3Price
+                                up3Price *= 1.2
 
 #-------------------------------------------------------------------------------------------------------------------------------
         # Exit button
