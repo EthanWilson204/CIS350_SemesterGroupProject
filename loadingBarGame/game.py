@@ -30,7 +30,7 @@ moneyDisplay = pygame.font.SysFont('Ariel',100)
 
 def displayTimer():
     surfFT = fontFT.render("Time: " + str(game_time), True, 'white')
-    screen.blit(surfFT, (725,70))
+    screen.blit(surfFT, (800,70))
     
 def displayL1Value(L1Value):
     L1Value = L1ValueDisplay.render("$" + str(L1Value), True, (0,0,0))
@@ -133,7 +133,7 @@ if __name__ == "__main__":
 # Money System
     # Define money variables
     money_goal = 1000000 #$1,000,000
-    user_money = 999000 #TODO set back to 0 for the game release
+    user_money = 0 #TODO set back to 0 for the game release
     L1_Amt = 100
     L2_Amt = 200
     L3_Amt = 300
@@ -187,8 +187,8 @@ if __name__ == "__main__":
     while gamerun:
 
     # Display Money and Timer
-        user_money = round(user_money, 2)
         blitScoreboard(screen, screen_width, screen_height)
+        user_money = round(user_money, 2)
         displayMoney(user_money)
         displayTimer()
 
@@ -223,16 +223,16 @@ if __name__ == "__main__":
             displayL2Value(L2Value)
             displayL3Value(L3Value)
 
+            # Round Up Prices
+            up1Price = round(up1Price, 2)
+            up2Price = round(up2Price, 2)
+            up3Price = round(up3Price, 2)
+
             # Display Upgrade Bar Prices
             blitUpPrices(screen)
             displayup1Price(up1Price)
             displayup2Price(up2Price)
             displayup3Price(up3Price)
-            
-            # Round Up Prices
-            up1Price = round(up1Price, 2)
-            up2Price = round(up2Price, 2)
-            up3Price = round(up3Price, 2)
             
             # Exit button
             if event.type == pygame.MOUSEBUTTONDOWN:
