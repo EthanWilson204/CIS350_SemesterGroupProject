@@ -20,45 +20,51 @@ from GameFunctions import *
 pygame.init()
 CLOCK = pygame.time.Clock()
 
+#initialize some fonts
+L1ValueDisplay = pygame.font.SysFont('Ariel',40)
+L2ValueDisplay = L1ValueDisplay
+L3ValueDisplay = L1ValueDisplay
+moneyDisplay = pygame.font.SysFont('Ariel',100)
+
 #-------------------------------------------------------------------------------------------------------------------------------
-            
+
 def displayTimer():
     surfFT = fontFT.render("Time: " + str(game_time), True, 'white')
     screen.blit(surfFT, (725,70))
     
 def displayL1Value(L1Value):
-        L1Value = L1ValueDisplay.render("$" + str(L1Value), True, (0,0,0))
-        screen.blit(L1Value, (660,360))
+    L1Value = L1ValueDisplay.render("$" + str(L1Value), True, (0,0,0))
+    screen.blit(L1Value, (660,360))
         
 def displayL2Value(L2Value):
-         L2Value = L2ValueDisplay.render("$" + str(L2Value), True, (0,0,0))
-         screen.blit(L2Value, (660,510))
+    L2Value = L2ValueDisplay.render("$" + str(L2Value), True, (0,0,0))
+    screen.blit(L2Value, (660,510))
          
 def displayL3Value(L3Value):
-         L3Value = L3ValueDisplay.render("$" + str(L3Value), True, (0,0,0))
-         screen.blit(L3Value, (660,660))
+    L3Value = L3ValueDisplay.render("$" + str(L3Value), True, (0,0,0))
+    screen.blit(L3Value, (660,660))
          
 def displayMoney (money):
-         money = moneyDisplay.render("$" + str(money), True, (255,255,255))
-         screen.blit(money, (300,70))
+    money = moneyDisplay.render("$" + str(money), True, (255,255,255))
+    screen.blit(money, (300,70))
          
 # Display Upgrade Bar 1 Price
 def displayup1Price (up1Price):
-        up1Price = up1PriceDisplay.render("$" + str(up1Price), True, (0,0,0))
-        screen.blit(up1Price, (1100,355))
+    up1Price = up1PriceDisplay.render("$" + str(up1Price), True, (0,0,0))
+    screen.blit(up1Price, (1100,355))
 
 # Display Upgrade Bar 2 Price
 def displayup2Price (up2Price):
-        up2Price = up2PriceDisplay.render("$" + str(up2Price), True, (0,0,0))
-        screen.blit(up2Price, (1100,505))
+    up2Price = up2PriceDisplay.render("$" + str(up2Price), True, (0,0,0))
+    screen.blit(up2Price, (1100,505))
 
 # Display Upgrade Bar 3 Price
 def displayup3Price (up3Price):
-        up3Price = up3PriceDisplay.render("$" + str(up3Price), True, (0,0,0))
-        screen.blit(up3Price, (1100,655))
+    up3Price = up3PriceDisplay.render("$" + str(up3Price), True, (0,0,0))
+    screen.blit(up3Price, (1100,655))
          
-#-------------------------------------------------------------------------------------------------------------------------------
 
+#-------------------------------------------------------------------------------------------------------------------------------
 
 if __name__ == "__main__":
 
@@ -110,23 +116,18 @@ if __name__ == "__main__":
     # Bar 1
     L1_Bar = pygame.Surface((bar_length,bar_height))
     L1_Bar.fill('red')
-
     L1Value = 100
-    L1ValueDisplay = pygame.font.SysFont('Ariel',40)
 
     # Bar 2
     L2_Bar = L1_Bar.copy()
     L2_Bar.fill('green')
-
     L2Value = 200
-    L2ValueDisplay = pygame.font.SysFont('Ariel',40)
-
+  
     # Bar 3
     L3_Bar = L1_Bar.copy()
     L3_Bar.fill('blue')
-
     L3Value = 300
-    L3ValueDisplay = pygame.font.SysFont('Ariel',40)
+
     
 #-------------------------------------------------------------------------------------------------------------------------------
 # Money System
@@ -137,9 +138,6 @@ if __name__ == "__main__":
     L2_Amt = 200
     L3_Amt = 300
 
-    moneyDisplay = pygame.font.SysFont('Ariel',100)
-
-
 #-------------------------------------------------------------------------------------------------------------------------------
 # Buttons
     # Quit button
@@ -147,23 +145,27 @@ if __name__ == "__main__":
     surf0 = font0.render('Quit', True, 'black')
     exitButton = pygame.Rect(1180,10,110,60)
 
+    # Button Rectangles
+    up1Button = pygame.Rect(1100,300,150,50)
+    up2Button = pygame.Rect(1100,450,150,50)
+    up3Button = pygame.Rect(1100,600,150,50)
+
+    # Initial Prices of Buttons
+    up1Price = 0.0 #then go to 300.0
+    up2Price = 1000.0
+    up3Price = 2000.0
+
     # Upgrade Bar 1 button
     font1 = pygame.font.SysFont('Ariel',50,bold=False)
     surf1 = font1.render('Upgrade', True, 'white')
-    up1Button = pygame.Rect(1100,300,150,50)
-    up1Price = 0.0 #then go to 300.0
 
     # Upgrade Bar 2 button
-    font2 = pygame.font.SysFont('Ariel',50,bold=False)
-    surf2 = font2.render('Upgrade', True, 'white')
-    up2Button = pygame.Rect(1100,450,150,50)
-    up2Price = 1000.0
+    font2 = font1
+    surf2 = surf1
 
     # Upgrade Bar 3 button
-    font3 = pygame.font.SysFont('Ariel',50,bold=False)
-    surf3 = font3.render('Upgrade', True, 'white')
-    up3Button = pygame.Rect(1100,600,150,50)
-    up3Price = 2000.0
+    font3 = font1
+    surf3 = surf1
 
     # Fonts for price display
     up1PriceDisplay = pygame.font.SysFont('Ariel',40)
