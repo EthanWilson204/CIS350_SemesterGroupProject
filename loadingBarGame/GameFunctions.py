@@ -44,7 +44,7 @@ def taxes(user_money, TAXES):
     if taxnum == TAXES: 
         #take half of their money and increase the tax counter on screen
         user_money = user_money/2 
-        #taxcounter += 1
+        #taxcounter += 1 #TODO create the taxcounter on the screen
     
     #don't change the user money if they don't roll taxes
     

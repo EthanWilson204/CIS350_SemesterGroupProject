@@ -197,7 +197,7 @@ if __name__ == "__main__":
         displayTimer()
 
     #TAXES, apply a 50% tax on money so long as the player has not won the game and has money to tax
-        if user_money <= money_goal and user_money > 0.0:
+        if user_money < money_goal and user_money > 0.0:
             #set the user_money equal to the returned taxed value based on RNG
             user_money = taxes(user_money, taxVal)#have a taxVal chance for taxes each tick
 
