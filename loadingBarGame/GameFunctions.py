@@ -1,4 +1,6 @@
 import pygame
+import random
+
 #add money to the total
 def addMoney(user_money, bar_amt):
     user_money += bar_amt
@@ -32,4 +34,19 @@ def checkUpgrades(B1_rect, B2_rect, B3_rect, L1_speed, L2_speed, L3_speed, mouse
             
     if B3_rect.collidepoint(mouse):
         buttonUpgrades('L3', L3_speed)
-        
+
+#Tax the player for half of their money if they roll the TAXES value
+def taxes(user_money, TAXES):
+    # 1/TAXES chance for taxes each tick
+    taxnum = random.randint(0,TAXES) 
+
+    # if they roll taxes (the top value)
+    if taxnum == TAXES: 
+        #take half of their money and increase the tax counter on screen
+        user_money = user_money/2 
+        #taxcounter += 1
+    
+    #don't change the user money if they don't roll taxes
+    
+    #return the money back to the user, taxed or not
+    return(user_money)

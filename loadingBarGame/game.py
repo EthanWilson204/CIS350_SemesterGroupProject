@@ -79,6 +79,9 @@ if __name__ == "__main__":
     start_x = 320
     load_limit = 1000
 
+    #define tax value
+    taxVal = 999
+
     #define bar positions
     L1_xpos = start_x
     L1_ypos = 300
@@ -132,11 +135,11 @@ if __name__ == "__main__":
 #-------------------------------------------------------------------------------------------------------------------------------
 # Money System
     # Define money variables
-    money_goal = 1000000 #$1,000,000
-    user_money = 0 #TODO set back to 0 for the game release
-    L1_Amt = 100
-    L2_Amt = 200
-    L3_Amt = 300
+    money_goal = 1000000.00 #$1,000,000
+    user_money = 0.00
+    L1_Amt = 100.00
+    L2_Amt = 200.00
+    L3_Amt = 300.00
 
 #-------------------------------------------------------------------------------------------------------------------------------
 # Buttons
@@ -184,13 +187,19 @@ if __name__ == "__main__":
     #Run the events in game
     gamerun = True
     ticknum = 60 #60 fps
-    while gamerun:
 
+    #Within the game loop
+    while gamerun:
     # Display Money and Timer
         blitScoreboard(screen, screen_width, screen_height)
         user_money = round(user_money, 2)
         displayMoney(user_money)
         displayTimer()
+
+    #TAXES, apply a 50% tax on money so long as the player has not won the game and has money to tax
+        if user_money <= money_goal and user_money > 0.0:
+            #set the user_money equal to the returned taxed value based on RNG
+            user_money = taxes(user_money, taxVal)#have a taxVal chance for taxes each tick
 
      # Check if player meets goal
         if user_money >= money_goal:
