@@ -25,6 +25,9 @@ L1ValueDisplay = pygame.font.SysFont('Ariel',40)
 L2ValueDisplay = L1ValueDisplay
 L3ValueDisplay = L1ValueDisplay
 moneyDisplay = pygame.font.SysFont('Ariel',100)
+status1PriceDisplay = pygame.font.SysFont('Ariel',30)
+upgradeFont = pygame.font.SysFont('Ariel',50,bold=False)
+purchaseFont  = pygame.font.SysFont('Ariel',45,bold=False)
 
 #-------------------------------------------------------------------------------------------------------------------------------
 
@@ -45,8 +48,13 @@ def displayL3Value(L3Value):
     screen.blit(L3Value, (660,660))
          
 def displayMoney (money):
-    money = moneyDisplay.render("$" + str(money), True, (255,255,255))
-    screen.blit(money, (300,70))
+    moneyComma = (f"{money:,}")
+    moneyComma = moneyDisplay.render("$" + moneyComma, True, (255,255,255))
+    screen.blit(moneyComma, (300,70))
+
+def displaystatus1Price(status1Price):
+    status1Price = status1PriceDisplay.render("$" + str(status1Price), True, (255,255,255))
+    screen.blit(status1Price, (100,305))
          
 # Display Upgrade Bar 1 Price
 def displayup1Price (up1Price):
@@ -61,8 +69,7 @@ def displayup2Price (up2Price):
 # Display Upgrade Bar 3 Price
 def displayup3Price (up3Price):
     up3Price = up3PriceDisplay.render("$" + str(up3Price), True, (0,0,0))
-    screen.blit(up3Price, (1100,655))
-         
+    screen.blit(up3Price, (1100,655))   
 
 #-------------------------------------------------------------------------------------------------------------------------------
 
@@ -135,11 +142,11 @@ if __name__ == "__main__":
 #-------------------------------------------------------------------------------------------------------------------------------
 # Money System
     # Define money variables
-    money_goal = 1000000.00 #$1,000,000
-    user_money = 0.00
-    L1_Amt = 100.00
-    L2_Amt = 200.00
-    L3_Amt = 300.00
+    money_goal = 1000000 #$1,000,000
+    user_money = 500000
+    L1_Amt = 100
+    L2_Amt = 200
+    L3_Amt = 300
 
 #-------------------------------------------------------------------------------------------------------------------------------
 # Buttons
@@ -154,26 +161,39 @@ if __name__ == "__main__":
     up3Button = pygame.Rect(1100,600,150,50)
 
     # Initial Prices of Buttons
-    up1Price = 0.0 #then go to 300.0
-    up2Price = 1000.0
-    up3Price = 2000.0
+    up1Price = 0 #then go to 300
+    up2Price = 1000
+    up3Price = 2000
 
     # Upgrade Bar 1 button
-    font1 = pygame.font.SysFont('Ariel',50,bold=False)
-    surf1 = font1.render('Upgrade', True, 'white')
+    upgradeSurf1 = upgradeFont.render('Upgrade', True, 'white')
+    purchaseSurf1 = purchaseFont.render('Purchase', True, 'white')
 
     # Upgrade Bar 2 button
-    font2 = font1
-    surf2 = surf1
+    upgradeSurf2 = upgradeFont.render('Upgrade', True, 'white')
+    purchaseSurf2 = purchaseFont.render('Purchase', True, 'white')
 
     # Upgrade Bar 3 button
-    font3 = font1
-    surf3 = surf1
+    upgradeSurf3 = upgradeFont.render('Upgrade', True, 'white')
+    purchaseSurf3 = purchaseFont.render('Purchase', True, 'white')
 
     # Fonts for price display
     up1PriceDisplay = pygame.font.SysFont('Ariel',40)
     up2PriceDisplay = pygame.font.SysFont('Ariel',40)
     up3PriceDisplay = pygame.font.SysFont('Ariel',40)
+
+    # Status Buttons
+    statusFont = pygame.font.SysFont('Ariel',50,bold=False)
+    statusSurf = statusFont.render('Profit x2', True, 'white')
+    cooldownStatusSurf = statusFont.render(' Active!', True, 'white')
+
+    status1Button = pygame.Rect(50,250,150,50)
+
+    status1Price = 300 #just for testing, price will change
+    statusActive = False
+    time_limit = 0
+
+    
     
 #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- GAME RUN -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
@@ -192,9 +212,12 @@ if __name__ == "__main__":
     while gamerun:
     # Display Money and Timer
         blitScoreboard(screen, screen_width, screen_height)
-        user_money = round(user_money, 2)
+        user_money = round(user_money, 0)
         displayMoney(user_money)
         displayTimer()
+
+    # Display price of each status effect
+        displaystatus1Price(status1Price)
 
     #TAXES, apply a 50% tax on money so long as the player has not won the game and has money to tax
         if user_money < money_goal and user_money > 0.0:
@@ -232,10 +255,11 @@ if __name__ == "__main__":
             displayL2Value(L2Value)
             displayL3Value(L3Value)
 
+
             # Round Up Prices
-            up1Price = round(up1Price, 2)
-            up2Price = round(up2Price, 2)
-            up3Price = round(up3Price, 2)
+            up1Price = round(up1Price, 0)
+            up2Price = round(up2Price, 0)
+            up3Price = round(up3Price, 0)
 
             # Display Upgrade Bar Prices
             blitUpPrices(screen)
@@ -256,7 +280,7 @@ if __name__ == "__main__":
                             
                             if L1_speed == 0:
                                  L1_speed = 3.0
-                                 up1Price = 300.0
+                                 up1Price = 300
                             else:
                                 L1_speed *= 1.3
                                 user_money -= up1Price
@@ -268,7 +292,7 @@ if __name__ == "__main__":
                         if up2Button.collidepoint(event.pos):
                             if L2_speed == 0:
                                  L2_speed = 1.5
-                                 up2Price = 500.0
+                                 up2Price = 500
                                  user_money -= 1000
                             else:
                                 L2_speed *= 1.3
@@ -281,12 +305,33 @@ if __name__ == "__main__":
                         if up3Button.collidepoint(event.pos):
                             if L3_speed == 0:
                                  L3_speed = 0.75
-                                 up3Price = 700.0
+                                 up3Price = 700
                                  user_money -= 2000
                             else:
                                 L3_speed *= 1.3
                                 user_money -= up3Price
                                 up3Price *= 1.2
+
+            # Status 1 button
+            if statusActive == False:
+                if user_money >= status1Price:
+                    if event.type == pygame.MOUSEBUTTONDOWN:
+                            if status1Button.collidepoint(event.pos):
+                                user_money -= status1Price
+                                statusActive = True
+                                time_limit = int(game_time) + 10
+                                L1_Amt *= 2
+                                L2_Amt *= 2
+                                L3_Amt *= 2
+
+            if statusActive == True:
+                if int(game_time) >= time_limit:
+                    L1_Amt /= 2
+                    L2_Amt /= 2
+                    L3_Amt /= 2
+                    statusActive = False
+
+
 
 #-------------------------------------------------------------------------------------------------------------------------------
         # Exit button
@@ -304,7 +349,10 @@ if __name__ == "__main__":
             pygame.draw.rect(screen,(100,100,100),up1Button)
         else:
             pygame.draw.rect(screen,(0,0,0),up1Button)
-        screen.blit(surf1,(up1Button.x+5, up1Button.y+5))
+        if L1_speed == 0:
+            screen.blit(purchaseSurf1,(up1Button.x+5, up1Button.y+5))
+        else:
+            screen.blit(upgradeSurf1,(up1Button.x+5, up1Button.y+5))
 #-------------------------------------------------------------------------------------------------------------------------------        
         # Upgrade Bar 2 button
         
@@ -312,7 +360,10 @@ if __name__ == "__main__":
             pygame.draw.rect(screen,(100,100,100),up2Button)
         else:
             pygame.draw.rect(screen,(0,0,0),up2Button)
-        screen.blit(surf2,(up2Button.x+5, up2Button.y+5))
+        if L2_speed == 0:
+            screen.blit(purchaseSurf2,(up2Button.x+5, up2Button.y+5))
+        else:
+            screen.blit(upgradeSurf2,(up2Button.x+5, up2Button.y+5))
 #-------------------------------------------------------------------------------------------------------------------------------        
         # Upgrade Bar 3 button
         
@@ -320,7 +371,22 @@ if __name__ == "__main__":
             pygame.draw.rect(screen,(100,100,100),up3Button)
         else:
             pygame.draw.rect(screen,(0,0,0),up3Button)
-        screen.blit(surf3,(up3Button.x+5, up3Button.y+5))
+        if L3_speed == 0:
+            screen.blit(purchaseSurf3,(up3Button.x+5, up3Button.y+5))
+        else:
+            screen.blit(upgradeSurf3,(up3Button.x+5, up3Button.y+5))
+#-------------------------------------------------------------------------------------------------------------------------------
+       # Status 1 button
+        
+        if statusActive == False:
+            if status1Button.x <= a <= status1Button.x + 150 and status1Button.y <= b <= status1Button.y + 50:
+                pygame.draw.rect(screen,(150,0,0),status1Button)
+            else:
+                pygame.draw.rect(screen,(200,0,0),status1Button)
+            screen.blit(statusSurf,(status1Button.x+5, status1Button.y+5))
+        else:
+            pygame.draw.rect(screen,(0,200,0),status1Button)
+            screen.blit(cooldownStatusSurf,(status1Button.x+5, status1Button.y+5))
 #-------------------------------------------------------------------------------------------------------------------------------
         #Loading Bar Animations
 
