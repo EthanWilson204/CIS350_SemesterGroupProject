@@ -1,11 +1,10 @@
 import pygame
 
-def SetBackground(screen, load_limit, screen_width, screen_height, L1_xpos, L2_xpos, L3_xpos, L1_ypos, L2_ypos, L3_ypos):
+def SetBackground(screen, screen_width, screen_height, L1_xpos, L2_xpos, L3_xpos, L1_ypos, L2_ypos, L3_ypos):
     
     #surface (screen overlay) displays
     
     #start position for all bars
-    bar_length = 50
     bar_height = 50    
 
     #bar background
