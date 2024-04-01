@@ -209,7 +209,7 @@ if __name__ == "__main__":
     status1Button = pygame.Rect(50,250,150,50)
 
     status1Price = 1000 #just for testing, price will change
-    status1Active = False
+    profit_active = False
     stat1_limit = 0
 
     #Status 2
@@ -358,26 +358,24 @@ if __name__ == "__main__":
 
 
             # Status 1 button
-            if status1Active == False:
+            if profit_active == False:
                 if user_money >= status1Price:
                     if event.type == pygame.MOUSEBUTTONDOWN:
                             if status1Button.collidepoint(event.pos):
                                 
                                 #status components in tuple to make them references
-                                amount_comps = [L1_Amt, L2_Amt, L3_Amt, user_money, status1Active, status1Price]
+                                amount_comps = [L1_Amt, L2_Amt, L3_Amt, user_money, profit_active, status1Price]
                                 
                                 #upgrade the speed, take away money, and set status active to be true
-                                L1_Amt, L2_Amt, L3_Amt, user_money, status1Active, status1Price = Start_All_Status(amount_comps)
+                                L1_Amt, L2_Amt, L3_Amt, user_money, profit_active, status1Price = Start_Profit(amount_comps)
                                 stat1_limit = int(game_time) + 10
             
 
-            if status1Active == True:
-                
-                #FIXME function move
+            if profit_active == True:
                 if int(game_time) >= stat1_limit:
                     
-                    stop_comps = [L1_Amt, L2_Amt, L3_Amt, status1Active]
-                    L1_Amt, L2_Amt, L3_Amt, status1Active = Stop_All_Status(stop_comps)
+                    stop_comps = [L1_Amt, L2_Amt, L3_Amt, profit_active]
+                    L1_Amt, L2_Amt, L3_Amt, profit_active = Stop_Profit(stop_comps)
                
             # Status 2 button
             if status2Active == False:
@@ -457,7 +455,7 @@ if __name__ == "__main__":
 #-------------------------------------------------------------------------------------------------------------------------------
        # Status 1 button
         
-        if status1Active == False:
+        if profit_active == False:
             if status1Button.x <= a <= status1Button.x + 150 and status1Button.y <= b <= status1Button.y + 50:
                 pygame.draw.rect(screen,(150,0,0),status1Button)
             else:
