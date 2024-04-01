@@ -160,7 +160,7 @@ if __name__ == "__main__":
 # Money System
     # Define money variables
     money_goal = 1000000 #$1,000,000
-    user_money = 0
+    user_money = 999900
     L1_Amt = 100
     L2_Amt = 200
     L3_Amt = 300
@@ -273,12 +273,8 @@ if __name__ == "__main__":
         if user_money >= money_goal:
             
             # Stop bars from loading and stop earning more money once game is won
-            #FIXME function move
-            
-            L1_speed = 0 
-            L2_speed = 0 
-            L3_speed = 0
-            user_money = 1000000
+            L1_speed, L2_speed, L3_speed, user_money = Stop_All()
+
 
         for event in pygame.event.get():
 
@@ -324,16 +320,18 @@ if __name__ == "__main__":
             # Upgrade Bar 1 button
             if user_money >= up1Price:
                 if event.type == pygame.MOUSEBUTTONDOWN:
-                        if up1Button.collidepoint(event.pos):
+                        if up1Button.collidepoint(event.pos):                           
                             
                             #FIXME function move
                             if L1_speed == 0:
                                  L1_speed = 3.0
                                  up1Price = 300
                             else:
-                                L1_speed *= 1.3
-                                user_money -= up1Price
-                                up1Price *= 1.2
+                                components = [L1_speed, up1Price, user_money] 
+                                L1_speed, up1Price, user_money = Upgrade_Bar(components)
+
+
+
 
             # Upgrade Bar 2 button
             if user_money >= up2Price:
@@ -346,9 +344,8 @@ if __name__ == "__main__":
                                  up2Price = 500
                                  user_money -= 1000
                             else:
-                                L2_speed *= 1.3
-                                user_money -= up2Price
-                                up2Price *= 1.2
+                                components = [L2_speed, up2Price, user_money] 
+                                L2_speed, up2Price, user_money = Upgrade_Bar(components)
 
             # Upgrade Bar 3 button
             if user_money >= up3Price:
@@ -361,9 +358,8 @@ if __name__ == "__main__":
                                  up3Price = 700
                                  user_money -= 2000
                             else:
-                                L3_speed *= 1.3
-                                user_money -= up3Price
-                                up3Price *= 1.2
+                                components = [L3_speed, up3Price, user_money] 
+                                L3_speed, up3Price, user_money = Upgrade_Bar(components)
 
             # Status 1 button
             if status1Active == False:
