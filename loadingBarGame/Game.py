@@ -367,7 +367,7 @@ if __name__ == "__main__":
                                 amount_comps = [L1_Amt, L2_Amt, L3_Amt, user_money, status1Active, status1Price]
                                 
                                 #upgrade the speed, take away money, and set status active to be true
-                                L1_Amt, L2_Amt, L3_Amt, user_money, status1Active, status1Price = Start_Status(amount_comps)
+                                L1_Amt, L2_Amt, L3_Amt, user_money, status1Active, status1Price = Start_All_Status(amount_comps)
                                 stat1_limit = int(game_time) + 10
             
 
@@ -377,7 +377,7 @@ if __name__ == "__main__":
                 if int(game_time) >= stat1_limit:
                     
                     stop_comps = [L1_Amt, L2_Amt, L3_Amt, status1Active]
-                    L1_Amt, L2_Amt, L3_Amt, status1Active = Stop_Status(stop_comps)
+                    L1_Amt, L2_Amt, L3_Amt, status1Active = Stop_All_Status(stop_comps)
                
             # Status 2 button
             if status2Active == False:
