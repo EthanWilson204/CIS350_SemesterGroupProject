@@ -28,6 +28,15 @@ moneyDisplay = pygame.font.SysFont('Ariel',100)
 status1PriceDisplay = pygame.font.SysFont('Ariel',30)
 upgradeFont = pygame.font.SysFont('Ariel',50,bold=False)
 purchaseFont  = pygame.font.SysFont('Ariel',45,bold=False)
+userLetterFont = pygame.font.SysFont('Ariel',300,bold=False)
+
+#-------------------------------------------------------------------------------------------------------------------------------
+# Profile Display
+userLetter = "G" #TODO set up with game start sequence
+
+def displayUserLetter(userLetter):
+    userLetter = userLetterFont.render(userLetter, True, (255,255,255))
+    screen.blit(userLetter, (40,10)) #TODO center letter automatically: i vs. w
 
 #-------------------------------------------------------------------------------------------------------------------------------
 
@@ -54,7 +63,7 @@ def displayMoney (money):
 
 def displaystatus1Price(status1Price):
     status1Price = status1PriceDisplay.render("$" + str(status1Price), True, (255,255,255))
-    screen.blit(status1Price, (100,305))
+    screen.blit(status1Price, (95,305))
          
 # Display Upgrade Bar 1 Price
 def displayup1Price (up1Price):
@@ -143,7 +152,7 @@ if __name__ == "__main__":
 # Money System
     # Define money variables
     money_goal = 1000000 #$1,000,000
-    user_money = 500000
+    user_money = 0
     L1_Amt = 100
     L2_Amt = 200
     L3_Amt = 300
@@ -189,7 +198,7 @@ if __name__ == "__main__":
 
     status1Button = pygame.Rect(50,250,150,50)
 
-    status1Price = 300 #just for testing, price will change
+    status1Price = 1000 #just for testing, price will change
     statusActive = False
     time_limit = 0
 
@@ -218,6 +227,9 @@ if __name__ == "__main__":
 
     # Display price of each status effect
         displaystatus1Price(status1Price)
+
+    # Display User Profile
+        displayUserLetter(userLetter)
 
     #TAXES, apply a 50% tax on money so long as the player has not won the game and has money to tax
         if user_money < money_goal and user_money > 0.0:
