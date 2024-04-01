@@ -273,7 +273,7 @@ if __name__ == "__main__":
         if user_money >= money_goal:
             
             # Stop bars from loading and stop earning more money once game is won
-            L1_speed, L2_speed, L3_speed, user_money = Stop_All()
+            L1_speed, L2_speed, L3_speed, user_money = 0, 0, 0, 1000000
 
 
         for event in pygame.event.get():
@@ -317,12 +317,12 @@ if __name__ == "__main__":
                         pygame.quit()
                         exit()
 
+
             # Upgrade Bar 1 button
             if user_money >= up1Price:
                 if event.type == pygame.MOUSEBUTTONDOWN:
                         if up1Button.collidepoint(event.pos):                           
                             
-                            #FIXME function move
                             if L1_speed == 0:
                                  L1_speed = 3.0
                                  up1Price = 300
@@ -330,15 +330,11 @@ if __name__ == "__main__":
                                 components = [L1_speed, up1Price, user_money] 
                                 L1_speed, up1Price, user_money = Upgrade_Bar(components)
 
-
-
-
             # Upgrade Bar 2 button
             if user_money >= up2Price:
                 if event.type == pygame.MOUSEBUTTONDOWN:
                         if up2Button.collidepoint(event.pos):
                             
-                            #FIXME function move
                             if L2_speed == 0:
                                  L2_speed = 1.5
                                  up2Price = 500
@@ -352,7 +348,6 @@ if __name__ == "__main__":
                 if event.type == pygame.MOUSEBUTTONDOWN:
                         if up3Button.collidepoint(event.pos):
                             
-                            #FIXME function move
                             if L3_speed == 0:
                                  L3_speed = 0.75
                                  up3Price = 700
@@ -361,29 +356,29 @@ if __name__ == "__main__":
                                 components = [L3_speed, up3Price, user_money] 
                                 L3_speed, up3Price, user_money = Upgrade_Bar(components)
 
+
             # Status 1 button
             if status1Active == False:
                 if user_money >= status1Price:
                     if event.type == pygame.MOUSEBUTTONDOWN:
                             if status1Button.collidepoint(event.pos):
                                 
-                                #FIXME function move
-                                user_money -= status1Price
-                                status1Active = True
+                                #status components in tuple to make them references
+                                amount_comps = [L1_Amt, L2_Amt, L3_Amt, user_money, status1Active, status1Price]
+                                
+                                #upgrade the speed, take away money, and set status active to be true
+                                L1_Amt, L2_Amt, L3_Amt, user_money, status1Active, status1Price = Start_Status(amount_comps)
                                 stat1_limit = int(game_time) + 10
-                                L1_Amt *= 2
-                                L2_Amt *= 2
-                                L3_Amt *= 2
+            
 
             if status1Active == True:
                 
                 #FIXME function move
                 if int(game_time) >= stat1_limit:
-                    L1_Amt /= 2
-                    L2_Amt /= 2
-                    L3_Amt /= 2
-                    status1Active = False
-
+                    
+                    stop_comps = [L1_Amt, L2_Amt, L3_Amt, status1Active]
+                    L1_Amt, L2_Amt, L3_Amt, status1Active = Stop_Status(stop_comps)
+               
             # Status 2 button
             if status2Active == False:
                 if user_money >= status2Price:

@@ -17,9 +17,6 @@ def Taxes(user_money, TAXES):
     #return the money back to the user, taxed or not
     return(user_money)
 
-def Stop_All():
-    return 0, 0, 0, 1000000
-
 def Upgrade_Bar(bar_comps):
     
     bar_speed, up_price, user_money = bar_comps
@@ -28,3 +25,25 @@ def Upgrade_Bar(bar_comps):
     up_price *= 1.2
     
     return bar_speed, up_price, user_money
+
+def Start_Status(amt_comps):
+    
+    L1A, L2A, L3A, money, stat_active, stat_price = amt_comps
+    
+    money -= stat_price
+    stat_active = True
+    L1A *= 2
+    L2A *= 2
+    L3A *= 2
+    
+    return L1A, L2A, L3A, money, stat_active, stat_price
+
+def Stop_Status(stop_comps):
+    L1A, L2A, L3A, stat_active = stop_comps
+    
+    L1A /= 2
+    L2A /= 2
+    L3A /= 2
+    stat_active = False
+    
+    return L1A, L2A, L3A, stat_active 
