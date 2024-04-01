@@ -25,7 +25,7 @@ L1ValueDisplay = pygame.font.SysFont('Ariel',40)
 L2ValueDisplay = L1ValueDisplay
 L3ValueDisplay = L1ValueDisplay
 moneyDisplay = pygame.font.SysFont('Ariel',100)
-status1PriceDisplay = pygame.font.SysFont('Ariel',30)
+statusPriceDisplay = pygame.font.SysFont('Ariel',30)
 upgradeFont = pygame.font.SysFont('Ariel',50,bold=False)
 purchaseFont  = pygame.font.SysFont('Ariel',45,bold=False)
 userLetterFont = pygame.font.SysFont('Ariel',300,bold=False)
@@ -62,8 +62,16 @@ def displayMoney (money):
     screen.blit(moneyComma, (300,70))
 
 def displaystatus1Price(status1Price):
-    status1Price = status1PriceDisplay.render("$" + str(status1Price), True, (255,255,255))
+    status1Price = statusPriceDisplay.render("$" + str(status1Price), True, (255,255,255))
     screen.blit(status1Price, (95,305))
+
+def displaystatus2Price(status2Price):
+    status2Price = statusPriceDisplay.render("$" + str(status2Price), True, (255,255,255))
+    screen.blit(status2Price, (95,455))
+
+def displaystatus3Price(status3Price):
+    status3Price = statusPriceDisplay.render("$" + str(status3Price), True, (255,255,255))
+    screen.blit(status3Price, (95,605))
          
 # Display Upgrade Bar 1 Price
 def displayup1Price (up1Price):
@@ -192,16 +200,39 @@ if __name__ == "__main__":
     up3PriceDisplay = pygame.font.SysFont('Ariel',40)
 
     # Status Buttons
-    statusFont = pygame.font.SysFont('Ariel',50,bold=False)
-    statusSurf = statusFont.render('Profit x2', True, 'white')
-    cooldownStatusSurf = statusFont.render(' Active!', True, 'white')
+
+    #Status 1
+    status1Font = pygame.font.SysFont('Ariel',50,bold=False)
+    status1Surf = status1Font.render('Profit x2', True, 'white')
+    cooldownStatus1Surf = status1Font.render(' Active!', True, 'white')
 
     status1Button = pygame.Rect(50,250,150,50)
 
     status1Price = 1000 #just for testing, price will change
-    statusActive = False
-    time_limit = 0
+    status1Active = False
+    stat1_limit = 0
 
+    #Status 2
+    status2Font = pygame.font.SysFont('Ariel',50,bold=False)
+    status2Surf = status2Font.render('  Stat 2', True, 'white')
+    cooldownStatus2Surf = status2Font.render(' Active!', True, 'white')
+
+    status2Button = pygame.Rect(50,400,150,50)
+
+    status2Price = 1000 #just for testing, price will change
+    status2Active = False
+    stat2_limit = 0
+
+    #Status 3
+    status3Font = pygame.font.SysFont('Ariel',50,bold=False)
+    status3Surf = status3Font.render('  Stat 3', True, 'white')
+    cooldownStatus3Surf = status3Font.render(' Active!', True, 'white')
+
+    status3Button = pygame.Rect(50,550,150,50)
+
+    status3Price = 1000 #just for testing, price will change
+    status3Active = False
+    stat3_limit = 0
     
     
 #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -227,6 +258,8 @@ if __name__ == "__main__":
 
     # Display price of each status effect
         displaystatus1Price(status1Price)
+        displaystatus2Price(status2Price)
+        displaystatus3Price(status3Price)
 
     # Display User Profile
         displayUserLetter(userLetter)
@@ -325,24 +358,53 @@ if __name__ == "__main__":
                                 up3Price *= 1.2
 
             # Status 1 button
-            if statusActive == False:
+            if status1Active == False:
                 if user_money >= status1Price:
                     if event.type == pygame.MOUSEBUTTONDOWN:
                             if status1Button.collidepoint(event.pos):
                                 user_money -= status1Price
-                                statusActive = True
-                                time_limit = int(game_time) + 10
+                                status1Active = True
+                                stat1_limit = int(game_time) + 10
                                 L1_Amt *= 2
                                 L2_Amt *= 2
                                 L3_Amt *= 2
 
-            if statusActive == True:
-                if int(game_time) >= time_limit:
+            if status1Active == True:
+                if int(game_time) >= stat1_limit:
                     L1_Amt /= 2
                     L2_Amt /= 2
                     L3_Amt /= 2
-                    statusActive = False
+                    status1Active = False
 
+            # Status 2 button
+            if status2Active == False:
+                if user_money >= status2Price:
+                    if event.type == pygame.MOUSEBUTTONDOWN:
+                            if status2Button.collidepoint(event.pos):
+                                user_money -= status2Price
+                                status2Active = True
+                                stat2_limit = int(game_time) + 10
+                                #TODO Add function
+
+            if status2Active == True:
+                if int(game_time) >= stat2_limit:
+                    #TODO Undo Function
+                    status2Active = False
+
+            # Status 3 button
+            if status3Active == False:
+                if user_money >= status3Price:
+                    if event.type == pygame.MOUSEBUTTONDOWN:
+                            if status3Button.collidepoint(event.pos):
+                                user_money -= status3Price
+                                status3Active = True
+                                stat3_limit = int(game_time) + 10
+                                #TODO Add function
+
+            if status3Active == True:
+                if int(game_time) >= stat3_limit:
+                    #TODO Undo Function
+                    status3Active = False
 
 
 #-------------------------------------------------------------------------------------------------------------------------------
@@ -390,15 +452,39 @@ if __name__ == "__main__":
 #-------------------------------------------------------------------------------------------------------------------------------
        # Status 1 button
         
-        if statusActive == False:
+        if status1Active == False:
             if status1Button.x <= a <= status1Button.x + 150 and status1Button.y <= b <= status1Button.y + 50:
                 pygame.draw.rect(screen,(150,0,0),status1Button)
             else:
                 pygame.draw.rect(screen,(200,0,0),status1Button)
-            screen.blit(statusSurf,(status1Button.x+5, status1Button.y+5))
+            screen.blit(status1Surf,(status1Button.x+5, status1Button.y+5))
         else:
             pygame.draw.rect(screen,(0,200,0),status1Button)
-            screen.blit(cooldownStatusSurf,(status1Button.x+5, status1Button.y+5))
+            screen.blit(cooldownStatus1Surf,(status1Button.x+5, status1Button.y+5))
+#-------------------------------------------------------------------------------------------------------------------------------
+        # Status 2 button
+        
+        if status2Active == False:
+            if status2Button.x <= a <= status2Button.x + 150 and status2Button.y <= b <= status2Button.y + 50:
+                pygame.draw.rect(screen,(150,0,0),status2Button)
+            else:
+                pygame.draw.rect(screen,(200,0,0),status2Button)
+            screen.blit(status2Surf,(status2Button.x+5, status2Button.y+5))
+        else:
+            pygame.draw.rect(screen,(0,200,0),status2Button)
+            screen.blit(cooldownStatus2Surf,(status2Button.x+5, status2Button.y+5))
+#-------------------------------------------------------------------------------------------------------------------------------
+        # Status 3 button
+        
+        if status3Active == False:
+            if status3Button.x <= a <= status3Button.x + 150 and status3Button.y <= b <= status3Button.y + 50:
+                pygame.draw.rect(screen,(150,0,0),status3Button)
+            else:
+                pygame.draw.rect(screen,(200,0,0),status3Button)
+            screen.blit(status3Surf,(status3Button.x+5, status3Button.y+5))
+        else:
+            pygame.draw.rect(screen,(0,200,0),status3Button)
+            screen.blit(cooldownStatus3Surf,(status3Button.x+5, status3Button.y+5))
 #-------------------------------------------------------------------------------------------------------------------------------
         #Loading Bar Animations
 
