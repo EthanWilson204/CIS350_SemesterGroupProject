@@ -160,7 +160,7 @@ if __name__ == "__main__":
 # Money System
     # Define money variables
     money_goal = 1000000 #$1,000,000
-    user_money = 999900
+    user_money = 0
     L1_Amt = 100
     L2_Amt = 200
     L3_Amt = 300
@@ -499,25 +499,19 @@ if __name__ == "__main__":
                 
         if L1_xpos > load_limit:
             
-            #FIXME function move
-            user_money += L1_Amt
-            L1_xpos = start_x
+            user_money, L1_xpos = Add_Reset(L1_Amt, L1_xpos, start_x, user_money)
             pygame.draw.rect(screen, 'white', (L1_xpos, L1_ypos, 740, bar_height))
         
         # Loading bar 2
         if L2_xpos > load_limit:
-            
-            #FIXME function move
-            user_money += L2_Amt
-            L2_xpos = start_x
+
+            user_money, L2_xpos = Add_Reset(L2_Amt, L2_xpos, start_x, user_money)
             pygame.draw.rect(screen, 'white', (L2_xpos, L2_ypos, 740, bar_height))
 
         # Loading bar 3
         if L3_xpos > load_limit:
-            
-            #FIXME function move
-            user_money += L3_Amt
-            L3_xpos = start_x
+
+            user_money, L3_xpos = Add_Reset(L3_Amt, L3_xpos, start_x, user_money)
             pygame.draw.rect(screen, 'white', (L3_xpos, L3_ypos, 740, bar_height))
             
         screen.blit(L1_Bar,(L1_xpos,L1_ypos))

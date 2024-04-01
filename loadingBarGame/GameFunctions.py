@@ -17,6 +17,13 @@ def Taxes(user_money, TAXES):
     #return the money back to the user, taxed or not
     return(user_money)
 
+def Add_Reset(bar_amt, bar_pos, start_pos, user_money):
+    
+    user_money += bar_amt
+    bar_pos = start_pos
+    
+    return user_money, bar_pos
+
 def Upgrade_Bar(bar_comps):
     
     bar_speed, up_price, user_money = bar_comps
@@ -47,3 +54,4 @@ def Stop_Profit(stop_comps):
     stat_active = False
     
     return L1A, L2A, L3A, stat_active 
+
