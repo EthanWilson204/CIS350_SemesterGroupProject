@@ -26,7 +26,7 @@ def Upgrade_Bar(bar_comps):
     
     return bar_speed, up_price, user_money
 
-def Start_All_Status(amt_comps):
+def Start_Profit(amt_comps):
     
     L1A, L2A, L3A, money, stat_active, stat_price = amt_comps
     
@@ -38,7 +38,7 @@ def Start_All_Status(amt_comps):
     
     return L1A, L2A, L3A, money, stat_active, stat_price
 
-def Stop_All_Status(stop_comps):
+def Stop_Profit(stop_comps):
     L1A, L2A, L3A, stat_active = stop_comps
     
     L1A /= 2
