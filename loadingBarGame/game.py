@@ -103,8 +103,10 @@ if __name__ == "__main__":
     start_x = 320
     load_limit = 1000
 
-    #define tax value
+    #define if taxes are on, tax value, and percentage of money taken from taxes
+    taxesOn = True
     taxVal = 999
+    taxPercent = 50
 
     #define bar positions
     L1_xpos = start_x
@@ -264,10 +266,10 @@ if __name__ == "__main__":
     # Display User Profile
         displayUserLetter(userLetter)
 
-    #TAXES, apply a 50% tax on money so long as the player has not won the game and has money to tax
-        if user_money < money_goal and user_money > 0.0:
+    #TAXES, apply a tax on money so long as the player has not won the game, has money to tax and taxes are on
+        if user_money < money_goal and user_money > 0.0 and taxesOn:
             #set the user_money equal to the returned taxed value based on RNG
-            user_money = taxes(user_money, taxVal)#have a taxVal chance for taxes each tick
+            user_money = taxes(user_money, taxVal, taxPercent)#have a taxVal chance for taxes each tick
 
      # Check if player meets goal
         if user_money >= money_goal:

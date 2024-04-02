@@ -36,14 +36,14 @@ def checkUpgrades(B1_rect, B2_rect, B3_rect, L1_speed, L2_speed, L3_speed, mouse
         buttonUpgrades('L3', L3_speed)
 
 #Tax the player for half of their money if they roll the TAXES value
-def taxes(user_money, TAXES):
+def taxes(user_money, TAXES, taxPercent):
     # 1/TAXES chance for taxes each tick
     taxnum = random.randint(0,TAXES) 
-
+    taxDecimalMultiplier = 1 - (taxPercent / 100)
     # if they roll taxes (the top value)
     if taxnum == TAXES: 
         #take half of their money and increase the tax counter on screen
-        user_money = user_money/2 
+        user_money = user_money * taxDecimalMultiplier
         #taxcounter += 1 #TODO create the taxcounter on the screen
     
     #don't change the user money if they don't roll taxes
