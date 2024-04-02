@@ -21,22 +21,59 @@ pygame.init()
 CLOCK = pygame.time.Clock()
 
 #initialize some fonts
-L1ValueDisplay = pygame.font.SysFont('Ariel',40)
-L2ValueDisplay = L1ValueDisplay
-L3ValueDisplay = L1ValueDisplay
+BarValueDisplay = pygame.font.SysFont('Ariel',40)
 moneyDisplay = pygame.font.SysFont('Ariel',100)
 statusPriceDisplay = pygame.font.SysFont('Ariel',30)
 upgradeFont = pygame.font.SysFont('Ariel',50,bold=False)
 purchaseFont  = pygame.font.SysFont('Ariel',45,bold=False)
-userLetterFont = pygame.font.SysFont('Ariel',300,bold=False)
+userLetterFont = pygame.font.SysFont('Ariel',250,bold=False)
+titleFont = pygame.font.SysFont('Ariel',150,bold=False)
+optionFont = pygame.font.SysFont('Ariel',40,bold=False)
+gameOverFont = pygame.font.SysFont('Ariel',80,bold=False)
 
 #-------------------------------------------------------------------------------------------------------------------------------
+# Game Start
+
+username = ''
+
+def displayStartMenu():
+    millionaire = titleFont.render("Millionaire", True, (0,200,0))
+    screen.blit(millionaire, (525,210))
+
+    tycoon = titleFont.render("Tycoon", True, (0,0,0))
+    screen.blit(tycoon, (610,300))
+
+    namePrompt = optionFont.render("What is your name?", True, (0,0,0))
+    screen.blit(namePrompt, (660,450))
+
+    usernameDisplay = optionFont.render(username, True, (255,0,0))
+    screen.blit(usernameDisplay, (660,480))
+
+
 # Profile Display
+profile_complete = False
+
 userLetter = "G" #TODO set up with game start sequence
 
 def displayUserLetter(userLetter):
     userLetter = userLetterFont.render(userLetter, True, (255,255,255))
-    screen.blit(userLetter, (40,10)) #TODO center letter automatically: i vs. w
+    screen.blit(userLetter, (50,20)) #TODO center letter automatically: i vs. w
+
+#-------------------------------------------------------------------------------------------------------------------------------
+    # Game Over
+def displayGameOver(game_time):
+
+    congrats1 = titleFont.render("Congratulations!", True, (0,200,0))
+    screen.blit(congrats1, (340,210))
+
+    congrats2 = gameOverFont.render("You reached $1,000,000 in", True, (0,0,0))
+    screen.blit(congrats2, (425,370))
+
+    endTime = gameOverFont.render(str(game_time) + " seconds.", True, (0,0,0))
+    screen.blit(endTime, (630,430))
+
+    congrats3 = optionFont.render("Thanks for playing!", True, (255,0,0))
+    screen.blit(congrats3, (645,600))
 
 #-------------------------------------------------------------------------------------------------------------------------------
 
@@ -45,15 +82,15 @@ def displayTimer():
     screen.blit(surfFT, (800,70))
     
 def displayL1Value(L1Value):
-    L1Value = L1ValueDisplay.render("$" + str(L1Value), True, (0,0,0))
+    L1Value = BarValueDisplay.render("$" + str(L1Value), True, (0,0,0))
     screen.blit(L1Value, (660,360))
         
 def displayL2Value(L2Value):
-    L2Value = L2ValueDisplay.render("$" + str(L2Value), True, (0,0,0))
+    L2Value = BarValueDisplay.render("$" + str(L2Value), True, (0,0,0))
     screen.blit(L2Value, (660,510))
          
 def displayL3Value(L3Value):
-    L3Value = L3ValueDisplay.render("$" + str(L3Value), True, (0,0,0))
+    L3Value = BarValueDisplay.render("$" + str(L3Value), True, (0,0,0))
     screen.blit(L3Value, (660,660))
          
 def displayMoney (money):
@@ -174,6 +211,11 @@ if __name__ == "__main__":
     surf0 = font0.render('Quit', True, 'black')
     exitButton = pygame.Rect(1180,10,110,60)
 
+    # Start button
+    startFont = pygame.font.SysFont('Ariel',70)
+    startSurf = startFont.render('Begin', True, 'black')
+    startButton = pygame.Rect(660,450,110,60)
+
     # Button Rectangles
     up1Button = pygame.Rect(1100,300,150,50)
     up2Button = pygame.Rect(1100,450,150,50)
@@ -211,7 +253,7 @@ if __name__ == "__main__":
     status1Button = pygame.Rect(50,250,150,50)
 
     status1Price = 1000 #just for testing, price will change
-    profit_active = False
+    status1_active = False
     stat1_limit = 0
 
     #Status 2
@@ -241,17 +283,18 @@ if __name__ == "__main__":
 #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- GAME RUN -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     
-    #set up timer
+    # Set up timer
     game_time = 0
     pygame.time.set_timer(pygame.USEREVENT, 1000)
     fontFT = pygame.font.SysFont('Ariel', 100, bold=False)
     
-    #Run the events in game
+    # Run the events in game
     gamerun = True
     ticknum = 60 #60 fps
 
-    #Within the game loop
+    # Within the game loop
     while gamerun:
+        
     # Display Money and Timer
         blitScoreboard(screen, screen_width, screen_height)
         user_money = round(user_money, 0)
@@ -277,7 +320,6 @@ if __name__ == "__main__":
             
             # Stop bars from loading and stop earning more money once game is won
             L1_speed, L2_speed, L3_speed, user_money = 0, 0, 0, 1000000
-
 
         for event in pygame.event.get():
 
@@ -361,24 +403,24 @@ if __name__ == "__main__":
 
 
             # Status 1 button
-            if profit_active == False:
+            if status1_active == False:
                 if user_money >= status1Price:
                     if event.type == pygame.MOUSEBUTTONDOWN:
                             if status1Button.collidepoint(event.pos):
-                                
+
                                 #status components in tuple to make them references
-                                amount_comps = [L1_Amt, L2_Amt, L3_Amt, user_money, profit_active, status1Price]
+                                amount_comps = [L1_Amt, L2_Amt, L3_Amt, user_money, status1_active, status1Price]
                                 
                                 #upgrade the speed, take away money, and set status active to be true
-                                L1_Amt, L2_Amt, L3_Amt, user_money, profit_active, status1Price = Start_Profit(amount_comps)
+                                L1_Amt, L2_Amt, L3_Amt, user_money, status1_active, status1Price = Start_Profit(amount_comps, 2)
                                 stat1_limit = int(game_time) + 10
             
 
-            if profit_active == True:
+            if status1_active == True:
                 if int(game_time) >= stat1_limit:
                     
-                    stop_comps = [L1_Amt, L2_Amt, L3_Amt, profit_active]
-                    L1_Amt, L2_Amt, L3_Amt, profit_active = Stop_Profit(stop_comps)
+                    stop_comps = [L1_Amt, L2_Amt, L3_Amt, status1_active]
+                    L1_Amt, L2_Amt, L3_Amt, status1_active = Stop_Profit(stop_comps, 2)
                
             # Status 2 button
             if status2Active == False:
@@ -458,7 +500,7 @@ if __name__ == "__main__":
 #-------------------------------------------------------------------------------------------------------------------------------
        # Status 1 button
         
-        if profit_active == False:
+        if status1_active == False:
             if status1Button.x <= a <= status1Button.x + 150 and status1Button.y <= b <= status1Button.y + 50:
                 pygame.draw.rect(screen,(150,0,0),status1Button)
             else:
@@ -520,11 +562,20 @@ if __name__ == "__main__":
         screen.blit(L1_Bar,(L1_xpos,L1_ypos))
         screen.blit(L2_Bar,(L2_xpos,L2_ypos))
         screen.blit(L3_Bar,(L3_xpos,L3_ypos))
-            
+
+        if profile_complete == False:
+            blitStartup(screen)
+            displayStartMenu()
+
+        if user_money >= money_goal:
+            blitStartup(screen)
+            displayGameOver(game_time)
+
+                
 #-------------------------------------------------------------------------------------------------------------------------------
         
         pygame.display.update()
-        CLOCK.tick(ticknum)#cap framerate at 60 fps     
+        CLOCK.tick(ticknum)#cap framerate at 60 fps    
 
     pygame.quit()
     exit()
