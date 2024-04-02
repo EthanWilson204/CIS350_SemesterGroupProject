@@ -1,12 +1,7 @@
 import pygame
-from GameFunctions import TextDisplay
 
 def SetBackground(screen, screen_width, screen_height, L1_xpos, L2_xpos, L3_xpos, L1_ypos, L2_ypos, L3_ypos):
     
-    #surface (screen overlay) displays
-    
-    #start position for all bars
-   
     #bar background
     pygame.draw.rect(screen, 'black', (L1_xpos-5, L1_ypos-5, 750, 60))
     pygame.draw.rect(screen, 'black', (L2_xpos-5, L2_ypos-5, 750, 60))

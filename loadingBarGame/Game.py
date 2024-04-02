@@ -211,7 +211,7 @@ if __name__ == "__main__":
     status1Button = pygame.Rect(50,250,150,50)
 
     status1Price = 1000 #just for testing, price will change
-    status1Active = False
+    profit_active = False
     stat1_limit = 0
 
     #Status 2
@@ -271,14 +271,13 @@ if __name__ == "__main__":
             #set the user_money equal to the returned taxed value based on RNG
             user_money = taxes(user_money, taxVal, taxPercent)#have a taxVal chance for taxes each tick
 
+
      # Check if player meets goal
         if user_money >= money_goal:
             
             # Stop bars from loading and stop earning more money once game is won
-            L1_speed = 0 
-            L2_speed = 0 
-            L3_speed = 0
-            user_money = 1000000
+            L1_speed, L2_speed, L3_speed, user_money = 0, 0, 0, 1000000
+
 
         for event in pygame.event.get():
 
@@ -289,6 +288,7 @@ if __name__ == "__main__":
             
             #update the time by one second
             if event.type == pygame.USEREVENT:
+                
                 #check if game is started
                 if L1_speed == 0 and user_money < 1000000:
                     game_time = 0
@@ -320,69 +320,72 @@ if __name__ == "__main__":
                         pygame.quit()
                         exit()
 
+
             # Upgrade Bar 1 button
             if user_money >= up1Price:
                 if event.type == pygame.MOUSEBUTTONDOWN:
-                        if up1Button.collidepoint(event.pos):
+                        if up1Button.collidepoint(event.pos):                           
                             
                             if L1_speed == 0:
                                  L1_speed = 3.0
                                  up1Price = 300
                             else:
-                                L1_speed *= 1.3
-                                user_money -= up1Price
-                                up1Price *= 1.2
+                                components = [L1_speed, up1Price, user_money] 
+                                L1_speed, up1Price, user_money = Upgrade_Bar(components)
 
             # Upgrade Bar 2 button
             if user_money >= up2Price:
                 if event.type == pygame.MOUSEBUTTONDOWN:
                         if up2Button.collidepoint(event.pos):
+                            
                             if L2_speed == 0:
                                  L2_speed = 1.5
                                  up2Price = 500
                                  user_money -= 1000
                             else:
-                                L2_speed *= 1.3
-                                user_money -= up2Price
-                                up2Price *= 1.2
+                                components = [L2_speed, up2Price, user_money] 
+                                L2_speed, up2Price, user_money = Upgrade_Bar(components)
 
             # Upgrade Bar 3 button
             if user_money >= up3Price:
                 if event.type == pygame.MOUSEBUTTONDOWN:
                         if up3Button.collidepoint(event.pos):
+                            
                             if L3_speed == 0:
                                  L3_speed = 0.75
                                  up3Price = 700
                                  user_money -= 2000
                             else:
-                                L3_speed *= 1.3
-                                user_money -= up3Price
-                                up3Price *= 1.2
+                                components = [L3_speed, up3Price, user_money] 
+                                L3_speed, up3Price, user_money = Upgrade_Bar(components)
+
 
             # Status 1 button
-            if status1Active == False:
+            if profit_active == False:
                 if user_money >= status1Price:
                     if event.type == pygame.MOUSEBUTTONDOWN:
                             if status1Button.collidepoint(event.pos):
-                                user_money -= status1Price
-                                status1Active = True
+                                
+                                #status components in tuple to make them references
+                                amount_comps = [L1_Amt, L2_Amt, L3_Amt, user_money, profit_active, status1Price]
+                                
+                                #upgrade the speed, take away money, and set status active to be true
+                                L1_Amt, L2_Amt, L3_Amt, user_money, profit_active, status1Price = Start_Profit(amount_comps)
                                 stat1_limit = int(game_time) + 10
-                                L1_Amt *= 2
-                                L2_Amt *= 2
-                                L3_Amt *= 2
+            
 
-            if status1Active == True:
+            if profit_active == True:
                 if int(game_time) >= stat1_limit:
-                    L1_Amt /= 2
-                    L2_Amt /= 2
-                    L3_Amt /= 2
-                    status1Active = False
-
+                    
+                    stop_comps = [L1_Amt, L2_Amt, L3_Amt, profit_active]
+                    L1_Amt, L2_Amt, L3_Amt, profit_active = Stop_Profit(stop_comps)
+               
             # Status 2 button
             if status2Active == False:
                 if user_money >= status2Price:
                     if event.type == pygame.MOUSEBUTTONDOWN:
                             if status2Button.collidepoint(event.pos):
+                                #FIXME function move
                                 user_money -= status2Price
                                 status2Active = True
                                 stat2_limit = int(game_time) + 10
@@ -398,6 +401,7 @@ if __name__ == "__main__":
                 if user_money >= status3Price:
                     if event.type == pygame.MOUSEBUTTONDOWN:
                             if status3Button.collidepoint(event.pos):
+                                #FIXME function move
                                 user_money -= status3Price
                                 status3Active = True
                                 stat3_limit = int(game_time) + 10
@@ -454,7 +458,7 @@ if __name__ == "__main__":
 #-------------------------------------------------------------------------------------------------------------------------------
        # Status 1 button
         
-        if status1Active == False:
+        if profit_active == False:
             if status1Button.x <= a <= status1Button.x + 150 and status1Button.y <= b <= status1Button.y + 50:
                 pygame.draw.rect(screen,(150,0,0),status1Button)
             else:
@@ -491,28 +495,26 @@ if __name__ == "__main__":
         #Loading Bar Animations
 
         # Loading bar 1
+        
         L1_xpos += L1_speed
         L2_xpos += L2_speed
         L3_xpos += L3_speed
                 
         if L1_xpos > load_limit:
             
-            user_money += L1_Amt
-            L1_xpos = start_x
+            user_money, L1_xpos = Add_Reset(L1_Amt, L1_xpos, start_x, user_money)
             pygame.draw.rect(screen, 'white', (L1_xpos, L1_ypos, 740, bar_height))
         
         # Loading bar 2
         if L2_xpos > load_limit:
-            
-            user_money += L2_Amt
-            L2_xpos = start_x
+
+            user_money, L2_xpos = Add_Reset(L2_Amt, L2_xpos, start_x, user_money)
             pygame.draw.rect(screen, 'white', (L2_xpos, L2_ypos, 740, bar_height))
 
         # Loading bar 3
         if L3_xpos > load_limit:
-            
-            user_money += L3_Amt
-            L3_xpos = start_x
+
+            user_money, L3_xpos = Add_Reset(L3_Amt, L3_xpos, start_x, user_money)
             pygame.draw.rect(screen, 'white', (L3_xpos, L3_ypos, 740, bar_height))
             
         screen.blit(L1_Bar,(L1_xpos,L1_ypos))
