@@ -51,7 +51,7 @@ def displayStartMenu():
 
 
 # Profile Display
-profile_complete = False
+profile_complete = True
 
 userLetter = "G" #TODO set up with game start sequence
 
@@ -257,8 +257,8 @@ if __name__ == "__main__":
     stat1_limit = 0
 
     #Status 2
-    status2Font = pygame.font.SysFont('Ariel',50,bold=False)
-    status2Surf = status2Font.render('  Stat 2', True, 'white')
+    status2Font = pygame.font.SysFont('Ariel',46,bold=False)
+    status2Surf = status2Font.render('No Taxes', True, 'white')
     cooldownStatus2Surf = status2Font.render(' Active!', True, 'white')
 
     status2Button = pygame.Rect(50,400,150,50)
@@ -269,8 +269,7 @@ if __name__ == "__main__":
 
     #Status 3
     status3Font = pygame.font.SysFont('Ariel',50,bold=False)
-    status3Surf = status3Font.render('  Stat 3', True, 'white')
-    cooldownStatus3Surf = status3Font.render(' Active!', True, 'white')
+    status3Surf = status3Font.render('Tax Cut', True, 'white')
 
     status3Button = pygame.Rect(50,550,150,50)
 
@@ -430,24 +429,25 @@ if __name__ == "__main__":
                                 #FIXME function move
                                 user_money -= status2Price
                                 status2Active = True
-                                stat2_limit = int(game_time) + 10
-                                #TODO Add function
+                                stat2_limit = int(game_time) + 20
+                                taxesOn = False
 
             if status2Active == True:
                 if int(game_time) >= stat2_limit:
                     #TODO Undo Function
                     status2Active = False
+                    taxesOn = True
 
             # Status 3 button
-            if status3Active == False:
-                if user_money >= status3Price:
-                    if event.type == pygame.MOUSEBUTTONDOWN:
-                            if status3Button.collidepoint(event.pos):
-                                #FIXME function move
-                                user_money -= status3Price
-                                status3Active = True
-                                stat3_limit = int(game_time) + 10
-                                #TODO Add function
+            if user_money >= status3Price:
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                        if status3Button.collidepoint(event.pos):
+                            #FIXME function move
+                            user_money -= status3Price
+                            taxPercent -= 2
+                            status3Price *= 1.3
+                            status3Price = round(status3Price, 0)
+                            print(taxPercent)
 
             if status3Active == True:
                 if int(game_time) >= stat3_limit:
@@ -524,15 +524,11 @@ if __name__ == "__main__":
 #-------------------------------------------------------------------------------------------------------------------------------
         # Status 3 button
         
-        if status3Active == False:
-            if status3Button.x <= a <= status3Button.x + 150 and status3Button.y <= b <= status3Button.y + 50:
-                pygame.draw.rect(screen,(150,0,0),status3Button)
-            else:
-                pygame.draw.rect(screen,(200,0,0),status3Button)
-            screen.blit(status3Surf,(status3Button.x+5, status3Button.y+5))
+        if status3Button.x <= a <= status3Button.x + 150 and status3Button.y <= b <= status3Button.y + 50:
+            pygame.draw.rect(screen,(150,0,0),status3Button)
         else:
-            pygame.draw.rect(screen,(0,200,0),status3Button)
-            screen.blit(cooldownStatus3Surf,(status3Button.x+5, status3Button.y+5))
+            pygame.draw.rect(screen,(200,0,0),status3Button)
+        screen.blit(status3Surf,(status3Button.x+5, status3Button.y+5))
 #-------------------------------------------------------------------------------------------------------------------------------
         #Loading Bar Animations
 
