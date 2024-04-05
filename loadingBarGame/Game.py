@@ -273,9 +273,7 @@ if __name__ == "__main__":
 
     status3Button = pygame.Rect(50,550,150,50)
 
-    status3Price = 1000 #just for testing, price will change
-    status3Active = False
-    stat3_limit = 0
+    status3Price = 1000
     
     
 #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -447,13 +445,6 @@ if __name__ == "__main__":
                             taxPercent -= 2
                             status3Price *= 1.3
                             status3Price = round(status3Price, 0)
-                            print(taxPercent)
-
-            if status3Active == True:
-                if int(game_time) >= stat3_limit:
-                    #TODO Undo Function
-                    status3Active = False
-
 
 #-------------------------------------------------------------------------------------------------------------------------------
         # Exit button
