@@ -2,7 +2,7 @@ import random
 
 
 #Tax the player for half of their money if they roll the TAXES value
-def taxes(user_money, TAXES, taxPercent):
+def taxes(user_money, TAXES, taxPercent, tax_sfx):
     # 1/TAXES chance for taxes each tick
     taxnum = random.randint(0,TAXES) 
     taxDecimalMultiplier = 1 - (taxPercent / 100)
@@ -10,6 +10,7 @@ def taxes(user_money, TAXES, taxPercent):
     if taxnum == TAXES: 
         #take half of their money and increase the tax counter on screen
         user_money = user_money * taxDecimalMultiplier
+        tax_sfx.play()
         #taxcounter += 1 #TODO create the taxcounter on the screen
     
     #don't change the user money if they don't roll taxes

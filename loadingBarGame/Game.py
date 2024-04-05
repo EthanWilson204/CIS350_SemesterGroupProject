@@ -31,6 +31,13 @@ titleFont = pygame.font.SysFont('Ariel',150,bold=False)
 optionFont = pygame.font.SysFont('Ariel',40,bold=False)
 gameOverFont = pygame.font.SysFont('Ariel',80,bold=False)
 
+# Sound Effects
+purchase_sfx = pygame.mixer.Sound("sfx/purchase.mp3")
+tax_sfx = pygame.mixer.Sound("sfx/taxes.mp3")
+status_sfx = pygame.mixer.Sound("sfx/status.mp3")
+statusEnd_sfx = pygame.mixer.Sound("sfx/statusEnd.mp3")
+victory_sfx = pygame.mixer.Sound("sfx/victory.mp3")
+
 #-------------------------------------------------------------------------------------------------------------------------------
 # Game Start
 
@@ -61,6 +68,9 @@ def displayUserLetter(userLetter):
 
 #-------------------------------------------------------------------------------------------------------------------------------
     # Game Over
+
+victorySFX = False
+
 def displayGameOver(game_time):
 
     congrats1 = titleFont.render("Congratulations!", True, (0,200,0))
@@ -309,7 +319,7 @@ if __name__ == "__main__":
     #TAXES, apply a tax on money so long as the player has not won the game, has money to tax and taxes are on
         if user_money < money_goal and user_money > 0.0 and taxesOn:
             #set the user_money equal to the returned taxed value based on RNG
-            user_money = taxes(user_money, taxVal, taxPercent)#have a taxVal chance for taxes each tick
+            user_money = taxes(user_money, taxVal, taxPercent, tax_sfx)#have a taxVal chance for taxes each tick
 
 
      # Check if player meets goal
@@ -365,6 +375,7 @@ if __name__ == "__main__":
                 if event.type == pygame.MOUSEBUTTONDOWN:
                         if up1Button.collidepoint(event.pos):                           
                             
+                            purchase_sfx.play()
                             if L1_speed == 0:
                                  L1_speed = 3.0
                                  up1Price = 300
@@ -377,6 +388,7 @@ if __name__ == "__main__":
                 if event.type == pygame.MOUSEBUTTONDOWN:
                         if up2Button.collidepoint(event.pos):
                             
+                            purchase_sfx.play()
                             if L2_speed == 0:
                                  L2_speed = 1.5
                                  up2Price = 500
@@ -390,6 +402,7 @@ if __name__ == "__main__":
                 if event.type == pygame.MOUSEBUTTONDOWN:
                         if up3Button.collidepoint(event.pos):
                             
+                            purchase_sfx.play()
                             if L3_speed == 0:
                                  L3_speed = 0.75
                                  up3Price = 700
@@ -405,6 +418,7 @@ if __name__ == "__main__":
                     if event.type == pygame.MOUSEBUTTONDOWN:
                             if status1Button.collidepoint(event.pos):
 
+                                status_sfx.play()
                                 #status components in tuple to make them references
                                 amount_comps = [L1_Amt, L2_Amt, L3_Amt, user_money, status1_active, status1Price]
                                 
@@ -415,7 +429,7 @@ if __name__ == "__main__":
 
             if status1_active == True:
                 if int(game_time) >= stat1_limit:
-                    
+                    statusEnd_sfx.play()
                     stop_comps = [L1_Amt, L2_Amt, L3_Amt, status1_active]
                     L1_Amt, L2_Amt, L3_Amt, status1_active = Stop_Profit(stop_comps, 2)
                
@@ -424,6 +438,9 @@ if __name__ == "__main__":
                 if user_money >= status2Price:
                     if event.type == pygame.MOUSEBUTTONDOWN:
                             if status2Button.collidepoint(event.pos):
+
+                                status_sfx.play()
+
                                 #FIXME function move
                                 user_money -= status2Price
                                 status2Active = True
@@ -432,7 +449,7 @@ if __name__ == "__main__":
 
             if status2Active == True:
                 if int(game_time) >= stat2_limit:
-                    #TODO Undo Function
+                    statusEnd_sfx.play()
                     status2Active = False
                     taxesOn = True
 
@@ -440,6 +457,9 @@ if __name__ == "__main__":
             if user_money >= status3Price:
                 if event.type == pygame.MOUSEBUTTONDOWN:
                         if status3Button.collidepoint(event.pos):
+                            
+                            status_sfx.play()
+                            
                             #FIXME function move
                             user_money -= status3Price
                             taxPercent -= 2
@@ -516,9 +536,9 @@ if __name__ == "__main__":
         # Status 3 button
         
         if status3Button.x <= a <= status3Button.x + 150 and status3Button.y <= b <= status3Button.y + 50:
-            pygame.draw.rect(screen,(150,0,0),status3Button)
+            pygame.draw.rect(screen,(75,75,150),status3Button)
         else:
-            pygame.draw.rect(screen,(200,0,0),status3Button)
+            pygame.draw.rect(screen,(75,75,200),status3Button)
         screen.blit(status3Surf,(status3Button.x+5, status3Button.y+5))
 #-------------------------------------------------------------------------------------------------------------------------------
         #Loading Bar Animations
@@ -557,6 +577,9 @@ if __name__ == "__main__":
         if user_money >= money_goal:
             blitStartup(screen)
             displayGameOver(game_time)
+            if victorySFX == False:
+                victory_sfx.play()
+                victorySFX = True
 
                 
 #-------------------------------------------------------------------------------------------------------------------------------
