@@ -262,7 +262,7 @@ if __name__ == "__main__":
 
     status1Button = pygame.Rect(50,250,150,50)
 
-    status1Price = 1000 #just for testing, price will change
+    status1Price = 50000 #just for testing, price will change
     status1_active = False
     stat1_limit = 0
 
@@ -273,7 +273,7 @@ if __name__ == "__main__":
 
     status2Button = pygame.Rect(50,400,150,50)
 
-    status2Price = 1000 #just for testing, price will change
+    status2Price = 100000 #just for testing, price will change
     status2Active = False
     stat2_limit = 0
 
@@ -419,12 +419,15 @@ if __name__ == "__main__":
                             if status1Button.collidepoint(event.pos):
 
                                 status_sfx.play()
+                                
                                 #status components in tuple to make them references
                                 amount_comps = [L1_Amt, L2_Amt, L3_Amt, user_money, status1_active, status1Price]
                                 
                                 #upgrade the speed, take away money, and set status active to be true
                                 L1_Amt, L2_Amt, L3_Amt, user_money, status1_active, status1Price = Start_Profit(amount_comps, 2)
                                 stat1_limit = int(game_time) + 10
+                                status1Price *= 1.4
+                                status1Price = round(status1Price, 0)
             
 
             if status1_active == True:
