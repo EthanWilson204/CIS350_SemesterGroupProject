@@ -64,7 +64,7 @@ userLetter = "G" #TODO set up with game start sequence
 
 def displayUserLetter(userLetter):
     userLetter = userLetterFont.render(userLetter, True, (255,255,255))
-    screen.blit(userLetter, (50,20)) #TODO center letter automatically: i vs. w
+    screen.blit(userLetter, (50,20)) 
 
 #-------------------------------------------------------------------------------------------------------------------------------
     # Game Over
@@ -110,15 +110,15 @@ def displayMoney (money):
 
 def displaystatus1Price(status1Price):
     status1Price = statusPriceDisplay.render("$" + str(status1Price), True, (255,255,255))
-    screen.blit(status1Price, (95,305))
+    screen.blit(status1Price, (80,305))
 
 def displaystatus2Price(status2Price):
     status2Price = statusPriceDisplay.render("$" + str(status2Price), True, (255,255,255))
-    screen.blit(status2Price, (95,455))
+    screen.blit(status2Price, (80,455))
 
 def displaystatus3Price(status3Price):
     status3Price = statusPriceDisplay.render("$" + str(status3Price), True, (255,255,255))
-    screen.blit(status3Price, (95,605))
+    screen.blit(status3Price, (80,605))
          
 # Display Upgrade Bar 1 Price
 def displayup1Price (up1Price):
@@ -313,6 +313,11 @@ if __name__ == "__main__":
         displaystatus2Price(status2Price)
         displaystatus3Price(status3Price)
 
+    # Display value of each loading bar
+        displayL1Value(L1Value)
+        displayL2Value(L2Value)
+        displayL3Value(L3Value)
+
     # Display User Profile
         displayUserLetter(userLetter)
 
@@ -345,12 +350,6 @@ if __name__ == "__main__":
                     displayTimer()
                 else:
                     game_time += 1
-
-            # Display value of each loading bar
-            displayL1Value(L1Value)
-            displayL2Value(L2Value)
-            displayL3Value(L3Value)
-
 
             # Round Up Prices
             up1Price = round(up1Price, 0)
