@@ -6,9 +6,9 @@ Authors: Ethan Wilson, Gideon Moerdyk, Gabe Kucinich
 
 Description:
 A game where you load bars to earn money towards a total. Everytime a bar loads, money is added to the total.
-You can spend money to upgrade the speed of each bar to earn money faster. Once the total is reached, the game
-is complete and a time will be displayed showing how fast it was completed. Figure out how to beat the game as
-fast as possible.
+You can spend money to upgrade the speed of each bar to earn money faster. Watch out for randomized taxes! Purchase status effects to 
+multiply income or reduce taxes. Once the total is reached, the gameis complete and a time will be displayed showing how fast it was 
+completed. Figure out how to beat the game as fast as possible.
 '''
 #imports
 import pygame
@@ -20,16 +20,16 @@ from GameFunctions import *
 pygame.init()
 CLOCK = pygame.time.Clock()
 
-#initialize some fonts
+# Initialize fonts
 BarValueDisplay = pygame.font.SysFont('Ariel',40)
 moneyDisplay = pygame.font.SysFont('Ariel',100)
 statusPriceDisplay = pygame.font.SysFont('Ariel',30)
-upgradeFont = pygame.font.SysFont('Ariel',50,bold=False)
-purchaseFont  = pygame.font.SysFont('Ariel',45,bold=False)
-userLetterFont = pygame.font.SysFont('Ariel',250,bold=False)
-titleFont = pygame.font.SysFont('Ariel',60,bold=False)
-optionFont = pygame.font.SysFont('Ariel',40,bold=False)
-gameOverFont = pygame.font.SysFont('Ariel',80,bold=False)
+upgradeFont = pygame.font.SysFont('Ariel',50,)
+purchaseFont  = pygame.font.SysFont('Ariel',45,)
+userLetterFont = pygame.font.SysFont('Ariel',250,)
+titleFont = pygame.font.SysFont('Ariel',70, bold = True)
+optionFont = pygame.font.SysFont('Ariel',40,)
+gameOverFont = pygame.font.SysFont('Ariel',80,)
 
 # Sound Effects
 purchase_sfx = pygame.mixer.Sound("sfx/purchase.mp3")
@@ -109,10 +109,10 @@ def displayup3Price (up3Price):
 
 def displayTitle():
     millionaire = titleFont.render("Millionaire", True, (0,200,0))
-    screen.blit(millionaire, (20,60))
+    screen.blit(millionaire, (2,60))
 
     tycoon = titleFont.render("Tycoon", True, (255,255,255))
-    screen.blit(tycoon, (50,100))
+    screen.blit(tycoon, (35,100))
 
 #-------------------------------------------------------------------------------------------------------------------------------
 
@@ -172,23 +172,25 @@ if __name__ == "__main__":
     L1_Bar = pygame.Surface((bar_length,bar_height))
     L1_Bar.fill('red')
     L1Value = 100
+    L1BarColor = "white"
 
     # Bar 2
     L2_Bar = L1_Bar.copy()
     L2_Bar.fill('green')
     L2Value = 200
-  
+    L2BarColor = "white"  
+
     # Bar 3
     L3_Bar = L1_Bar.copy()
     L3_Bar.fill('blue')
     L3Value = 300
-
+    L3BarColor = "white"
     
 #-------------------------------------------------------------------------------------------------------------------------------
 # Money System
     # Define money variables
     money_goal = 1000000 #$1,000,000
-    user_money = 0
+    user_money = 500000
     L1_Amt = 100
     L2_Amt = 200
     L3_Amt = 300
@@ -263,8 +265,7 @@ if __name__ == "__main__":
     status3Button = pygame.Rect(50,550,150,50)
 
     status3Price = 1000
-    
-    
+
 #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- GAME RUN -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -297,10 +298,10 @@ if __name__ == "__main__":
         displayL2Value(L2Value)
         displayL3Value(L3Value)
 
-    # Display User Profile
+    # Display game title
         displayTitle()
 
-    #TAXES, apply a tax on money so long as the player has not won the game, has money to tax and taxes are on
+    # Taxes, apply a tax on money so long as the player has not won the game, has money to tax and taxes are on
         if user_money < money_goal and user_money > 0.0 and taxesOn:
             #set the user_money equal to the returned taxed value based on RNG
             user_money = taxes(user_money, taxVal, taxPercent, tax_sfx)#have a taxVal chance for taxes each tick
@@ -533,19 +534,28 @@ if __name__ == "__main__":
         if L1_xpos > load_limit:
             
             user_money, L1_xpos = Add_Reset(L1_Amt, L1_xpos, start_x, user_money)
-            pygame.draw.rect(screen, 'white', (L1_xpos, L1_ypos, 740, bar_height))
+            pygame.draw.rect(screen, L1BarColor, (L1_xpos, L1_ypos, 740, bar_height))
+        
+        if L1_speed >= 50:
+            L1BarColor = "red"
         
         # Loading bar 2
         if L2_xpos > load_limit:
 
             user_money, L2_xpos = Add_Reset(L2_Amt, L2_xpos, start_x, user_money)
-            pygame.draw.rect(screen, 'white', (L2_xpos, L2_ypos, 740, bar_height))
+            pygame.draw.rect(screen, L2BarColor, (L2_xpos, L2_ypos, 740, bar_height))
+
+        if L2_speed >= 50:
+            L2BarColor = "green"
 
         # Loading bar 3
         if L3_xpos > load_limit:
 
             user_money, L3_xpos = Add_Reset(L3_Amt, L3_xpos, start_x, user_money)
-            pygame.draw.rect(screen, 'white', (L3_xpos, L3_ypos, 740, bar_height))
+            pygame.draw.rect(screen, L3BarColor, (L3_xpos, L3_ypos, 740, bar_height))
+
+        if L3_speed >= 50:
+            L3BarColor = "blue"
             
         screen.blit(L1_Bar,(L1_xpos,L1_ypos))
         screen.blit(L2_Bar,(L2_xpos,L2_ypos))

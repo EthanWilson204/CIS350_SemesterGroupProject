@@ -1,7 +1,6 @@
 import unittest
 from Game import *
 from GameFunctions import *
-from GameScreen import *
 from pygame import display
 
 class GameTest(unittest.TestCase):
@@ -14,7 +13,7 @@ class GameTest(unittest.TestCase):
     #dont write tests for UI, write tests for things not with the UI
     #test to see if money is rendered properly for car 1, 2, and 3
     def test_displayL1Value_1(self):
-        L1Value = L1ValueDisplay.render("$" + str(100), True, (0,0,0))
+        L1Value = displayL1Value.render("$" + str(100), True, (0,0,0))
         self.assertEqual(L1Value, "$100")
         
     #test to see if the initial upgrade costs are correct
