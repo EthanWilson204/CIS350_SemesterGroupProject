@@ -14,16 +14,13 @@ def SetBackground(screen, screen_width, screen_height, L1_xpos, L2_xpos, L3_xpos
     Profile_Bar = pygame.Surface((screen_width, 200))
     Profile_Bar.fill((10,60,0))
 
-
     #left side status bar display
     Left_Side_Bar = pygame.Surface((250, screen_height - 200))
     Left_Side_Bar.fill((10, 60, 0))
 
-
     #profile corner display
     Profile_Corner = pygame.Surface((250,200))
     Profile_Corner.fill((0,0,0))
-
 
     #static screen behavior    
     screen.blit(Profile_Bar, (0,0))
@@ -35,11 +32,9 @@ def blitScoreboard(screen, screen_width, screen_height):
     Profile_Bar = pygame.Surface((screen_width, 200,))
     Profile_Bar.fill((10,60,0))
 
-
     #left side status bar display
     Left_Side_Bar = pygame.Surface((250, screen_height - 200))
     Left_Side_Bar.fill((10, 60, 0))
-
 
     #profile corner display
     Profile_Corner = pygame.Surface((250,200))
@@ -59,6 +54,5 @@ def blitStartup(screen):
     #Profile setup menu
     Profile_Menu = pygame.Surface((1050,550))
     Profile_Menu.fill((200,200,200))
-
     screen.blit(Profile_Menu, (250,200))
 
