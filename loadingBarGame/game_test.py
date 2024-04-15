@@ -194,3 +194,59 @@ class TestGame(unittest.TestCase):
         
         self.assertEqual(user_money, 500000 - self.status3Price)
         self.assertEqual(status_active, True)
+        
+        
+    #test Stop_Status function
+    #test first status
+    def test_Stop_Profit_1(self):
+        L1A, L2A, L3A = self.L1_Amt, self.L2_Amt, self.L3_Amt
+        user_money = 500000
+        status_active = False
+        multiplier = 2
+        
+        amt_comps = [L1A, L2A, L3A, user_money, status_active, self.status1Price]
+        L1A, L2A, L3A, _, status_active, self.status1Price = Start_Profit(amt_comps, multiplier)
+        
+        stop_comps = [L1A, L2A, L3A, status_active]
+        L1A, L2A, L3A, status_active = Stop_Profit(stop_comps, multiplier)
+        
+        self.assertEqual(L1A, self.L1_Amt)
+        self.assertEqual(L2A, self.L2_Amt)
+        self.assertEqual(L3A, self.L3_Amt)
+        self.assertEqual(status_active, False)
+  
+    #test second status (different multiplier)
+    def test_Stop_Profit_2(self):
+        L1A, L2A, L3A = self.L1_Amt, self.L2_Amt, self.L3_Amt
+        user_money = 500000
+        status_active = False
+        multiplier = 5
+        
+        amt_comps = [L1A, L2A, L3A, user_money, status_active, self.status2Price]
+        L1A, L2A, L3A, _, status_active, self.status2Price = Start_Profit(amt_comps, multiplier)
+        
+        stop_comps = [L1A, L2A, L3A, status_active]
+        L1A, L2A, L3A, status_active = Stop_Profit(stop_comps, multiplier)
+        
+        self.assertEqual(L1A, self.L1_Amt)
+        self.assertEqual(L2A, self.L2_Amt)
+        self.assertEqual(L3A, self.L3_Amt)
+        self.assertEqual(status_active, False)
+    
+    #test third status (different multiplier)
+    def test_Stop_Profit_3(self):
+        L1A, L2A, L3A = self.L1_Amt, self.L2_Amt, self.L3_Amt
+        user_money = 500000
+        status_active = False
+        multiplier = 7.5
+        
+        amt_comps = [L1A, L2A, L3A, user_money, status_active, self.status3Price]
+        L1A, L2A, L3A, _, status_active, self.status3Price = Start_Profit(amt_comps, multiplier)
+        
+        stop_comps = [L1A, L2A, L3A, status_active]
+        L1A, L2A, L3A, status_active = Stop_Profit(stop_comps, multiplier)
+        
+        self.assertEqual(L1A, self.L1_Amt)
+        self.assertEqual(L2A, self.L2_Amt)
+        self.assertEqual(L3A, self.L3_Amt)
+        self.assertEqual(status_active, False)
