@@ -204,9 +204,12 @@ class TestGame(unittest.TestCase):
         status_active = False
         multiplier = 2
         
+        #increase the speed of the bars, change status_active to True
         amt_comps = [L1A, L2A, L3A, user_money, status_active, self.status1Price]
         L1A, L2A, L3A, _, status_active, self.status1Price = Start_Profit(amt_comps, multiplier)
         
+        #initialize the stop components with the increased bar speeds and true status.
+        #return components to original values
         stop_comps = [L1A, L2A, L3A, status_active]
         L1A, L2A, L3A, status_active = Stop_Profit(stop_comps, multiplier)
         
@@ -222,9 +225,12 @@ class TestGame(unittest.TestCase):
         status_active = False
         multiplier = 5
         
+        #increase the speed of the bars, change status_active to True
         amt_comps = [L1A, L2A, L3A, user_money, status_active, self.status2Price]
         L1A, L2A, L3A, _, status_active, self.status2Price = Start_Profit(amt_comps, multiplier)
         
+        #initialize the stop components with the increased bar speeds and true status.
+        #return components to original values
         stop_comps = [L1A, L2A, L3A, status_active]
         L1A, L2A, L3A, status_active = Stop_Profit(stop_comps, multiplier)
         
@@ -240,9 +246,12 @@ class TestGame(unittest.TestCase):
         status_active = False
         multiplier = 7.5
         
+        #increase the speed of the bars, change status_active to True
         amt_comps = [L1A, L2A, L3A, user_money, status_active, self.status3Price]
         L1A, L2A, L3A, _, status_active, self.status3Price = Start_Profit(amt_comps, multiplier)
         
+        #initialize the stop components with the increased bar speeds and true status.
+        #return components to original values
         stop_comps = [L1A, L2A, L3A, status_active]
         L1A, L2A, L3A, status_active = Stop_Profit(stop_comps, multiplier)
         
