@@ -12,12 +12,20 @@ class TestGame(unittest.TestCase):
         display.init()
         self.load_limit = 1000
         self.start_x = 320
+        
         self.L1_Amt = 100
         self.L2_Amt = 200
         self.L3_Amt = 300
+        
         self.status1Price = 50000
         self.status2Price = 100000
         self.status3Price = 1000
+        
+        self.L1_speed = 3.0
+        self.L2_speed = 1.5
+        self.L3_speed = 0.75
+        
+        self.up1price, self.up2price, self.up3price = 300, 500, 700
         
     def tearDown(self):
         display.quit()
@@ -66,12 +74,52 @@ class TestGame(unittest.TestCase):
         self.assertEqual(user_money, 10300)
         self.assertEqual(L3_xpos, self.start_x)
         
-        
-        
-        
-        
-        
+
     #test Upgrade_Bar
+    #test first bar
+    def test_Upgrade_Bar_1(self):
+        user_money = 10000
+        bar_comps = [self.L1_speed, self.up1price, user_money]
+        L1_speed, up1Price, new_user_money = Upgrade_Bar(bar_comps)
+        
+        self.assertLess(new_user_money, 10000)
+        self.assertGreater(L1_speed, self.L1_speed)
+        self.assertGreater(up1Price, self.up1price)
+                
+        self.assertEqual(L1_speed, self.L1_speed * 1.3)
+        self.assertEqual(up1Price, self.up1price * 1.2)
+        self.assertEqual(new_user_money, user_money - self.up1price)
+    
+    #test second bar
+    def test_Upgrade_Bar_2(self):
+        user_money = 10000
+        bar_comps = [self.L2_speed, self.up2price, user_money]
+        L2_speed, up2Price, new_user_money = Upgrade_Bar(bar_comps)
+        
+        self.assertLess(new_user_money, 10000)
+        self.assertGreater(L2_speed, self.L2_speed)
+        self.assertGreater(up2Price, self.up2price)
+                
+        self.assertEqual(L2_speed, self.L2_speed * 1.3)
+        self.assertEqual(up2Price, self.up2price * 1.2)
+        self.assertEqual(new_user_money, user_money - self.up2price)
+    
+    #test third bar
+    def test_Upgrade_Bar_3(self):
+        user_money = 10000
+        bar_comps = [self.L3_speed, self.up3price, user_money]
+        L3_speed, up3Price, new_user_money = Upgrade_Bar(bar_comps)
+        
+        self.assertLess(new_user_money, 10000)
+        self.assertGreater(L3_speed, self.L3_speed)
+        self.assertGreater(up3Price, self.up3price)
+                
+        self.assertEqual(L3_speed, self.L3_speed * 1.3)
+        self.assertEqual(up3Price, self.up3price * 1.2)
+        self.assertEqual(new_user_money, user_money - self.up3price)
+        
+        
+    #test Start_Profit function
     #test profit multipliers 
     def test_Start_Profit_1(self):
         
