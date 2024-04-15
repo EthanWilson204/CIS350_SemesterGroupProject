@@ -399,18 +399,19 @@ if __name__ == "__main__":
                 if user_money >= status1Price:
                     if event.type == pygame.MOUSEBUTTONDOWN:
                             if status1Button.collidepoint(event.pos):
+                                if user_money < 1000000:
                         
-                                if soundOn == True:
-                                    status_sfx.play()
+                                    if soundOn == True:
+                                        status_sfx.play()
                             
-                                #status components in tuple to make them references
-                                amount_comps = [L1_Amt, L2_Amt, L3_Amt, user_money, status1_active, status1Price]
-                                
-                                #upgrade the speed, take away money, and set status active to be true
-                                L1_Amt, L2_Amt, L3_Amt, user_money, status1_active, status1Price = Start_Profit(amount_comps, 2)
-                                stat1_limit = int(game_time) + 10
-                                status1Price *= 1.4
-                                status1Price = round(status1Price, 0)
+                                    #status components in tuple to make them references
+                                    amount_comps = [L1_Amt, L2_Amt, L3_Amt, user_money, status1_active, status1Price]
+
+                                    #upgrade the speed, take away money, and set status active to be true
+                                    L1_Amt, L2_Amt, L3_Amt, user_money, status1_active, status1Price = Start_Profit(amount_comps, 2)
+                                    stat1_limit = int(game_time) + 10
+                                    status1Price *= 1.4
+                                    status1Price = round(status1Price, 0)
             
 
             if status1_active == True:
@@ -426,8 +427,8 @@ if __name__ == "__main__":
             if status2Active == False:
                 if user_money >= status2Price:
                     if event.type == pygame.MOUSEBUTTONDOWN:
-                            if status2Button.collidepoint(event.pos):
-            
+                        if status2Button.collidepoint(event.pos):
+                            if user_money < 1000000:
                                 if soundOn == True:
                                     status_sfx.play()
                                 
@@ -448,8 +449,8 @@ if __name__ == "__main__":
             # Status 3 button
             if user_money >= status3Price:
                 if event.type == pygame.MOUSEBUTTONDOWN:
-                        if status3Button.collidepoint(event.pos):
-                            
+                    if status3Button.collidepoint(event.pos):
+                        if user_money < 1000000:        
                             if soundOn == True:
                                 status_sfx.play()
                             
@@ -594,5 +595,5 @@ if __name__ == "__main__":
 #-------------------------------------------------------------------------------------------------------------------------------
         pygame.display.update()
         CLOCK.tick(ticknum)#cap framerate at 60 fps    
-    pygame.quit()
-    exit()
+    #pygame.quit()
+    #exit()
