@@ -15,6 +15,9 @@ class TestGame(unittest.TestCase):
         self.L1_Amt = 100
         self.L2_Amt = 200
         self.L3_Amt = 300
+        self.status1Price = 50000
+        self.status2Price = 100000
+        self.status3Price = 1000
         
     def tearDown(self):
         display.quit()
@@ -63,21 +66,83 @@ class TestGame(unittest.TestCase):
         self.assertEqual(user_money, 10300)
         self.assertEqual(L3_xpos, self.start_x)
         
-    
-    
-    
-    
-    
-    
-    
-        
-
-    """
-    def test_Upgrade_Bar(self):
         
         
-    def test_Start_Profit(self):
         
         
-    def test_Stop_Profit(self):
-    """
+        
+    #test Upgrade_Bar
+    #test profit multipliers 
+    def test_Start_Profit_1(self):
+        
+        L1A, L2A, L3A = self.L1_Amt, self.L2_Amt, self.L3_Amt
+        statusPrice = self.status1Price
+        user_money = 500000
+        status_active = False
+        multiplier = 2
+        
+        amt_comps = [L1A, L2A, L3A, user_money, status_active, statusPrice]
+        L1A, L2A, L3A, _, _, _ = Start_Profit(amt_comps, multiplier)
+        #L1A, L2A, L3A, user_money, status_active, statusPrice = Upgrade_Bar(amt_comps, multiplier)
+        
+        self.assertGreater(L1A, self.L1_Amt)
+        self.assertGreater(L2A, self.L2_Amt)
+        self.assertGreater(L3A, self.L3_Amt)
+        
+        self.assertEqual(L1A, self.L1_Amt * multiplier)
+        self.assertEqual(L2A, self.L2_Amt * multiplier)
+        self.assertEqual(L3A, self.L3_Amt * multiplier)
+    
+    #test first status button
+    def test_Start_Profit_2(self):
+        
+        L1A, L2A, L3A = self.L1_Amt, self.L2_Amt, self.L3_Amt
+        statusPrice = self.status1Price
+        user_money = 500000
+        status_active = False
+        multiplier = 2
+        
+        amt_comps = [L1A, L2A, L3A, user_money, status_active, statusPrice]
+        _, _, _, user_money, status_active, statusPrice = Start_Profit(amt_comps, multiplier)
+        
+        self.assertLess(user_money, 500000)
+        self.assertNotEqual(status_active, False)
+        
+        self.assertEqual(user_money, 500000 - self.status1Price)
+        self.assertEqual(status_active, True) 
+    
+    #test second status button
+    def test_Start_Profit_3(self):
+        
+        L1A, L2A, L3A = self.L1_Amt, self.L2_Amt, self.L3_Amt
+        statusPrice = self.status2Price
+        user_money = 500000
+        status_active = False
+        multiplier = 2
+        
+        amt_comps = [L1A, L2A, L3A, user_money, status_active, statusPrice]
+        _, _, _, user_money, status_active, statusPrice = Start_Profit(amt_comps, multiplier)
+        
+        self.assertLess(user_money, 500000)
+        self.assertNotEqual(status_active, False)
+        
+        self.assertEqual(user_money, 500000 - self.status2Price)
+        self.assertEqual(status_active, True) 
+    
+    #test third status button
+    def test_Start_Profit_4(self):
+        
+        L1A, L2A, L3A = self.L1_Amt, self.L2_Amt, self.L3_Amt
+        statusPrice = self.status3Price
+        user_money = 500000
+        status_active = False
+        multiplier = 2
+        
+        amt_comps = [L1A, L2A, L3A, user_money, status_active, statusPrice]
+        _, _, _, user_money, status_active, statusPrice = Start_Profit(amt_comps, multiplier)
+        
+        self.assertLess(user_money, 500000)
+        self.assertNotEqual(status_active, False)
+        
+        self.assertEqual(user_money, 500000 - self.status3Price)
+        self.assertEqual(status_active, True)
