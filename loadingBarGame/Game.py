@@ -353,45 +353,48 @@ if __name__ == "__main__":
             if user_money >= up1Price:
                 if event.type == pygame.MOUSEBUTTONDOWN:
                         if up1Button.collidepoint(event.pos):    
-                                               
-                            if soundOn == True:
-                               purchase_sfx.play()
-                            if L1_speed == 0:
-                                 L1_speed = 3.0
-                                 up1Price = 300
-                            else:
-                                components = [L1_speed, up1Price, user_money] 
-                                L1_speed, up1Price, user_money = Upgrade_Bar(components)
+                            if user_money < 1000000:
+
+                                if soundOn == True:
+                                    purchase_sfx.play()
+                                if L1_speed == 0:
+                                    L1_speed = 3.0
+                                    up1Price = 300
+                                else:
+                                    components = [L1_speed, up1Price, user_money] 
+                                    L1_speed, up1Price, user_money = Upgrade_Bar(components)
 
             # Upgrade Bar 2 button
             if user_money >= up2Price:
                 if event.type == pygame.MOUSEBUTTONDOWN:
                         if up2Button.collidepoint(event.pos):
-                                                 
-                            if soundOn == True:
-                                purchase_sfx.play()
-                            if L2_speed == 0:
-                                 L2_speed = 1.5
-                                 up2Price = 500
-                                 user_money -= 1000
-                            else:
-                                components = [L2_speed, up2Price, user_money] 
-                                L2_speed, up2Price, user_money = Upgrade_Bar(components)
+                            if user_money < 1000000:
+
+                                if soundOn == True:
+                                    purchase_sfx.play()
+                                if L2_speed == 0:
+                                    L2_speed = 1.5
+                                    up2Price = 500
+                                    user_money -= 1000
+                                else:
+                                    components = [L2_speed, up2Price, user_money] 
+                                    L2_speed, up2Price, user_money = Upgrade_Bar(components)
 
             # Upgrade Bar 3 button
             if user_money >= up3Price:
                 if event.type == pygame.MOUSEBUTTONDOWN:
                         if up3Button.collidepoint(event.pos):
-                                               
-                            if soundOn == True:
-                                purchase_sfx.play()
-                            if L3_speed == 0:
-                                 L3_speed = 0.75
-                                 up3Price = 700
-                                 user_money -= 2000
-                            else:
-                                components = [L3_speed, up3Price, user_money] 
-                                L3_speed, up3Price, user_money = Upgrade_Bar(components)
+                            if user_money < 1000000:  
+
+                                if soundOn == True:
+                                    purchase_sfx.play()
+                                if L3_speed == 0:
+                                    L3_speed = 0.75
+                                    up3Price = 700
+                                    user_money -= 2000
+                                else:
+                                    components = [L3_speed, up3Price, user_money] 
+                                    L3_speed, up3Price, user_money = Upgrade_Bar(components)
 
 
             # Status 1 button
